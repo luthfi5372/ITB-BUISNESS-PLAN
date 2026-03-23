@@ -75,7 +75,7 @@ export default function ProfilePage() {
                 <motion.div 
                   className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full" 
                   initial={{ width: 0 }}
-                  animate={{ width: `${Math.min((stats.exp % 1000) / 10}%` }}
+                  animate={{ width: `${Math.min((stats.exp % 1000) / 10)}%` }}
                   transition={{ duration: 1 }}
                 />
               </div>
