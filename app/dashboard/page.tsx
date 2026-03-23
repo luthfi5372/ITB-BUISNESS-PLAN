@@ -18,8 +18,8 @@ const moods = [
 ];
 
 const quests = [
-  { title: "Jurnal Harian", desc: "Tulis 1 hal yang kamu syukuri hari ini", xp: 50, done: true, icon: <BookOpen size={16} /> },
-  { title: "Napas Dalam 5 Menit", desc: "Latihan pernapasan mindful", xp: 30, done: true, icon: <Activity size={16} /> },
+  { title: "Jurnal Harian", desc: "Tulis 1 hal yang kamu syukuri hari ini", xp: 50, done: false, icon: <BookOpen size={16} /> },
+  { title: "Napas Dalam 5 Menit", desc: "Latihan pernapasan mindful", xp: 30, done: false, icon: <Activity size={16} /> },
   { title: "Sesi Mira AI", desc: "Curhat ke Mira tentang harimu", xp: 80, done: false, icon: <MessageCircle size={16} /> },
   { title: "Tidur Sebelum 23.00", desc: "Jaga ritme tidurmu", xp: 60, done: false, icon: <Moon size={16} /> },
 ];
@@ -193,7 +193,7 @@ export default function DashboardPage() {
                 <p className="text-[9px] text-emerald-400 font-bold flex items-center gap-1"><span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite]" /> Online</p>
               </div>
             </div>
-            <p className="text-xs text-slate-400 font-medium italic mb-5 leading-relaxed">&ldquo;Hai Luthfi! Gimana harimu hari ini? 🌙&rdquo;</p>
+            <p className="text-xs text-slate-400 font-medium italic mb-5 leading-relaxed">&ldquo;Hai {userData.name}! Gimana harimu hari ini? 🌙&rdquo;</p>
             <Link href="/dashboard/chat" className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:shadow-[0_10px_20px_rgba(99,102,241,0.3)] hover:-translate-y-0.5 transition-all duration-300">
               <MessageCircle size={14} /> Mulai Chat
             </Link>
@@ -232,7 +232,14 @@ export default function DashboardPage() {
             <Trophy size={16} className="text-amber-400" />
           </div>
           <div className="grid grid-cols-3 gap-2 mb-4">
-            {[ {e:"🔥",l:"7 Hari",ok:true},{e:"🛡️",l:"Guardian",ok:true},{e:"⚔️",l:"Warrior",ok:true},{e:"🌟",l:"30 Hari",ok:false},{e:"👑",l:"Master",ok:false},{e:"🧘",l:"Zen",ok:false} ].map((b,i)=>(
+            {[ 
+              {e:"🔥",l:"7 Hari",ok: userData.streak >= 7},
+              {e:"🛡️",l:"Guardian",ok: userData.level >= 5},
+              {e:"⚔️",l:"Warrior",ok: userData.level >= 10},
+              {e:"🌟",l:"30 Hari",ok: userData.streak >= 30},
+              {e:"👑",l:"Master",ok: userData.level >= 25},
+              {e:"🧘",l:"Zen",ok: userData.points >= 500} 
+            ].map((b,i)=>(
               <div key={i} className={`flex flex-col items-center gap-1 p-2 rounded-xl border ${b.ok?"bg-amber-500/10 border-amber-500/20":"bg-white/[0.02] border-white/5 opacity-40"}`}>
                 <span className="text-lg">{b.e}</span>
                 <span className="text-[8px] font-black text-slate-500 uppercase">{b.l}</span>
@@ -241,7 +248,11 @@ export default function DashboardPage() {
           </div>
           <div className="pt-4 border-t border-white/5">
             <p className="text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3">Leaderboard Sekolah</p>
-            {[{rank:1,name:"Kamu",xp:"2.840",me:true},{rank:2,name:"Rizky A.",xp:"2.650",me:false},{rank:3,name:"Putri N.",xp:"2.410",me:false}].map(p=>(
+            {[
+              {rank:1, name: userData.exp > 2650 ? userData.name : "Rizky A.", xp: Math.max(userData.exp, 2650).toLocaleString("id-ID"), me: userData.exp > 2650},
+              {rank:2, name: userData.exp <= 2650 && userData.exp > 1000 ? userData.name : "Putri N.", xp: userData.exp <= 2650 && userData.exp > 1000 ? userData.exp.toLocaleString("id-ID") : "2.410", me: userData.exp <= 2650 && userData.exp > 1000},
+              {rank:3, name: userData.exp <= 1000 ? userData.name : "Alex S.", xp: userData.exp <= 1000 ? userData.exp.toLocaleString("id-ID") : "1.890", me: userData.exp <= 1000}
+            ].map(p=>(
               <div key={p.rank} className={`flex items-center gap-3 py-1.5 ${p.me?"text-indigo-400":"text-slate-500"}`}>
                 <span className="text-[10px] font-black w-4">#{p.rank}</span>
                 <span className="flex-1 text-[11px] font-black">{p.name}</span>
