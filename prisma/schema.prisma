@@ -53,12 +53,13 @@ model MoodLog {
 model Appointment {
   id            String   @id @default(cuid())
   userId        String
-  psychologistId String
+  psychologistId String?
+  doctorName    String?
   date          DateTime
   status        String   @default("SCHEDULED") // SCHEDULED, COMPLETED, CANCELLED
   method        String   @default("chat") // video, voice, chat
   user          User     @relation(fields: [userId], references: [id])
-  psychologist  Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologist  Psychologist? @relation(fields: [psychologistId], references: [id])
 }
 
 model Post {
