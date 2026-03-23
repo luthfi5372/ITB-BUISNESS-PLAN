@@ -1,0 +1,19 @@
+node_modules
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Build & Dev
+.next
+.DS_Store
+dist
+build
+
+# Prisma
+prisma/migrations
+.DS_Store
+.next
+dist
+build

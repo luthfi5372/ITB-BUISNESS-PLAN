@@ -1,0 +1,129 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  image         String?
+  role          String    @default("USER")
+  subscriptionTier String @default("FREE") // FREE, PREMIUM, ENTERPRISE
+  dailyChatCount Int      @default(0)
+
+  streak            Int      @default(0)
+  stabilityScore    Int      @default(80)
+  exp               Int      @default(0) // Poin pengalaman
+  level             Int      @default(1) // Level user
+  title             String   @default("Zen Seeker") // Gelar otomatis
+  mindfulnessPoints Int      @default(0) // Mata uang reward
+  lastActive        DateTime @default(now())
+
+  moodLogs      MoodLog[]
+  posts         Post[]
+  appointments  Appointment[]
+  emergencyContacts EmergencyContact[]
+  achievements  Achievement[]
+  habits        Habit[]
+  subscriptions Subscription[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model MoodLog {
+  id        String   @id @default(cuid())
+  userId    String
+  mood      Int      // Skala 1-5 (1: Sedih sekali, 5: Sangat Bahagia)
+  note      String? 
+  activities String?
+
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Appointment {
+  id            String   @id @default(cuid())
+  userId        String
+  psychologistId String
+  date          DateTime
+  status        String   @default("SCHEDULED") // SCHEDULED, COMPLETED, CANCELLED
+  method        String   @default("chat") // video, voice, chat
+  user          User     @relation(fields: [userId], references: [id])
+  psychologist  Psychologist @relation(fields: [psychologistId], references: [id])
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  userId      String
+  content     String 
+  communityId String?  // school/city group
+
+  location    String?  // Untuk fitur komunitas lokal
+  isAnon      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model EmergencyContact {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  phone     String
+  relation  String   // e.g., "Keluarga", "Teman", "Guru"
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+model Achievement {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String   // e.g., "7 Days Streak"
+  description String
+  icon        String   // e.g., "star", "trophy"
+  unlockedAt  DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Habit {
+  id          String   @id @default(cuid())
+  userId      String
+  sleepHours  Float?
+  appUsageMins Int?
+  exerciseMins Int?
+  date        DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Psychologist {
+  id            String   @id @default(cuid())
+  name          String
+  specialization String  // e.g., "Klinis", "CBT", "Anak"
+  rate          Int      // Rp per session
+  methods       String   @default("chat,video") // comma separated
+  schedule      String?  // JSON string "mon:09:00-12:00,tue:14:00-17:00"
+  location      String?  // city/school
+  isAvailable   Boolean  @default(true)
+
+  appointments  Appointment[]
+}
+
+model Subscription {
+  id           String   @id @default(cuid())
+  userId       String
+  tier         String   // FREE, PREMIUM, ENTERPRISE
+  expiresAt    DateTime?
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id])
+}
+
