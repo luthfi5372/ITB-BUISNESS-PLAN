@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -23,40 +24,69 @@ const quests = [
   { title: "Tidur Sebelum 23.00", desc: "Jaga ritme tidurmu", xp: 60, done: false, icon: <Moon size={16} /> },
 ];
 
-const stats = [
-  { label: "Hari Berturut", value: "12", unit: "hari 🔥", color: "from-amber-500 to-orange-500" },
-  { label: "Total XP", value: "2.840", unit: "poin", color: "from-indigo-500 to-violet-500" },
-  { label: "Sesi Selesai", value: "34", unit: "bulan ini", color: "from-emerald-500 to-teal-500" },
-  { label: "Level Saat Ini", value: "12", unit: "Warrior", color: "from-rose-500 to-pink-500" },
-];
-
 export default function DashboardPage() {
+  const { data: session } = useSession();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "Tamu",
+    streak: 0,
+    exp: 0,
+    level: 1,
+    title: "Newbie",
+    points: 0,
+  });
+
   const completedQuests = quests.filter(q => q.done).length;
   const totalXP = quests.filter(q => q.done).reduce((acc, q) => acc + q.xp, 0);
 
   useEffect(() => {
-    // Pada mode demo, cek local storage. (Di app sungguhan: menggunakan user db)
+    // Cek status tutorial untuk UI
     const hasSeen = localStorage.getItem("hasSeenTutorial");
     if (!hasSeen) {
       setShowTutorial(true);
     }
-  }, []);
+
+    // Ambil data stats asli dari database bila login
+    if (session?.user) {
+       setUserData(prev => ({ ...prev, name: session.user?.name || "Player" }));
+       fetch("/api/user/stats")
+         .then(res => res.json())
+         .then(data => {
+            if (!data.error) {
+              setUserData(prev => ({ 
+                ...prev, 
+                streak: data.streak, 
+                exp: data.exp, 
+                level: data.level, 
+                title: data.title,
+                points: data.points 
+              }));
+            }
+         });
+    }
+  }, [session]);
+
+  const dynamicStats = [
+    { label: "Hari Berturut", value: userData.streak.toString(), unit: "hari 🔥", color: "from-amber-500 to-orange-500" },
+    { label: "Total XP", value: userData.exp.toLocaleString("id-ID"), unit: "poin", color: "from-indigo-500 to-violet-500" },
+    { label: "Mindfulness", value: userData.points.toString(), unit: "poin", color: "from-emerald-500 to-teal-500" },
+    { label: "Level Saat Ini", value: userData.level.toString(), unit: userData.title, color: "from-rose-500 to-pink-500" },
+  ];
 
   return (
     <div className="p-6 space-y-6">
-      {showTutorial && <TutorialGame email="" onComplete={() => setShowTutorial(false)} />}
+      {showTutorial && <TutorialGame email={session?.user?.email || ""} onComplete={() => setShowTutorial(false)} />}
 
       {/* Greeting */}
       <div>
-        <h1 className="text-2xl font-black italic uppercase tracking-tighter text-white">Selamat Pagi, Luthfi! ☀️</h1>
-        <p className="text-[10px] text-slate-500 font-medium mt-1">Minggu, 23 Maret 2026 &bull; Level 12 Warrior</p>
+        <h1 className="text-2xl font-black italic uppercase tracking-tighter text-white">Selamat Datang, {userData.name}! ☀️</h1>
+        <p className="text-[10px] text-slate-500 font-medium mt-1">Level {userData.level} {userData.title}</p>
       </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, i) => (
+        {dynamicStats.map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.08 }}
             className="group bg-white/5 border border-white/10 rounded-2xl p-5 relative overflow-hidden hover:bg-white/10 hover:-translate-y-1 hover:shadow-2xl hover:border-white/20 transition-all duration-300 cursor-default"
           >
@@ -65,7 +95,7 @@ export default function DashboardPage() {
             <p className="text-2xl font-black text-white group-hover:scale-105 origin-left transition-transform duration-300">{stat.value}</p>
             <p className="text-[10px] text-slate-500 font-medium mt-1">{stat.unit}</p>
           </motion.div>
-        ))}
+         ))}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
