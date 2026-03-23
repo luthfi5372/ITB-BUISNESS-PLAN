@@ -17,18 +17,22 @@ export const metadata: Metadata = {
   keywords: "kesehatan mental, psikologi, AI, mood tracker, pelajar, mahasiswa, Indonesia",
 };
 
+import { ThemeProvider } from "../components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" suppressHydrationWarning>
       <body className={`${plusJakarta.variable} font-jakarta bg-[#050508] cyber-cursor antialiased`}>
         <AuthProvider>
           <LevelUpProvider>
-            {children}
-            <EmergencyButton />
+            <ThemeProvider attribute="data-theme" defaultTheme="sage-green" enableSystem={false}>
+              {children}
+              <EmergencyButton />
+            </ThemeProvider>
           </LevelUpProvider>
         </AuthProvider>
       </body>

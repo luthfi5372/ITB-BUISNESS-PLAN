@@ -9,12 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cyber: {
-          bg: '#050508',
-          glass: 'rgba(255, 255, 255, 0.03)',
-          accent1: '#6366f1', // indigo
-          accent2: '#f43f5e', // rose
-          accent3: '#fbbf24', // amber
+        accent: {
+          primary: 'rgb(var(--accent-primary) / <alpha-value>)',
+          glow: 'var(--accent-glow)',
         },
         'mind-violet': '#8B5CF6',
         'mind-pink': '#EC4899',
@@ -46,8 +43,8 @@ const config: Config = {
           '50%': { boxShadow: '0 0 50px rgba(251,191,36,0.7)' },
         },
         'glow-rose': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(244,63,94,0.4)' },
-          '50%': { boxShadow: '0 0 50px rgba(244,63,94,0.8)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(244, 63, 94, 0.4)' },
+          '50%': { boxShadow: '0 0 50px rgba(244, 63, 94, 0.8)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },

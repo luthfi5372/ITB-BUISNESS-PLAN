@@ -141,8 +141,49 @@
 :root {
   --bg: 0 0% 100%;
   --fg: 222.2 47.4% 11.2%;
+  --accent-primary: 99 102 241; /* Indigo default */
+  --accent-glow: rgba(99, 102, 241, 0.5);
 }
+
 .dark {
   --bg: 222.2 84% 4.9%;
   --fg: 210 40% 98%;
+}
+
+/* Theme Sage Green */
+[data-theme='sage-green'] {
+  --accent-primary: 16 185 129; /* emerald-500 */
+  --accent-glow: rgba(16, 185, 129, 0.5);
+}
+
+/* Theme Blue Sky */
+[data-theme='blue-sky'] {
+  --accent-primary: 59 130 246; /* blue-500 */
+  --accent-glow: rgba(59, 130, 246, 0.5);
+}
+
+/* Theme Lavender Dream */
+[data-theme='lavender'] {
+  --accent-primary: 167 139 250; /* violet-400 */
+  --accent-glow: rgba(167, 139, 250, 0.5);
+}
+
+/* Theme Warm Peach */
+[data-theme='warm-peach'] {
+  --accent-primary: 251 146 60; /* orange-400 */
+  --accent-glow: rgba(251, 146, 60, 0.5);
+}
+
+/* Override global accent color to use variable */
+.text-indigo-600, .text-indigo-400, .text-indigo-500 {
+  color: rgb(var(--accent-primary)) !important;
+}
+.bg-indigo-600, .bg-indigo-500 {
+  background-color: rgb(var(--accent-primary)) !important;
+}
+.border-indigo-600, .border-indigo-500, .border-indigo-400 {
+  border-color: rgb(var(--accent-primary)) !important;
+}
+.shadow-indigo-500\/30 {
+  --tw-shadow-color: var(--accent-glow) !important;
 }

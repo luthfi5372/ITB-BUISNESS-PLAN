@@ -9,9 +9,11 @@ import {
   Lock, ShieldCheck, Users, TrendingDown, Building, 
   CheckCircle2, Smile, Activity, Stethoscope 
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export default function MasterLandingPage() {
   const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
   useEffect(() => { setMounted(true); }, []);
 
   if (!mounted) return <div className="min-h-screen bg-[#050508]" />;
@@ -45,6 +47,14 @@ export default function MasterLandingPage() {
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Theme Switcher */}
+            <div className="flex items-center gap-2 mr-4 bg-white/5 p-1.5 rounded-full border border-white/10">
+              <button onClick={() => setTheme('sage-green')} className={`w-3.5 h-3.5 rounded-full bg-[#10b981] transition-transform hover:scale-125 ${theme === 'sage-green' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Sage Green" />
+              <button onClick={() => setTheme('blue-sky')} className={`w-3.5 h-3.5 rounded-full bg-[#3b82f6] transition-transform hover:scale-125 ${theme === 'blue-sky' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Blue Sky" />
+              <button onClick={() => setTheme('lavender')} className={`w-3.5 h-3.5 rounded-full bg-[#a78bfa] transition-transform hover:scale-125 ${theme === 'lavender' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Lavender Dream" />
+              <button onClick={() => setTheme('warm-peach')} className={`w-3.5 h-3.5 rounded-full bg-[#fb923c] transition-transform hover:scale-125 ${theme === 'warm-peach' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Warm Peach" />
+            </div>
+
             <Link href="/login" className="text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-white transition-colors">
               Masuk
             </Link>

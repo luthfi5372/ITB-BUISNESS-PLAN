@@ -8,6 +8,8 @@ import {
   Users, Trophy, Settings, LogOut,
   LayoutDashboard, Menu, Bell, MessageCircle
 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard size={16} /> },
@@ -22,6 +24,10 @@ const navLinks = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => { setMounted(true); }, []);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex overflow-hidden">
@@ -124,6 +130,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <div className="flex items-center gap-3">
+            {/* Theme Switcher */}
+            {mounted && (
+              <div className="flex items-center gap-1.5 mr-2 bg-white/5 p-1 rounded-full border border-white/10 shrink-0">
+                <button onClick={() => setTheme('sage-green')} className={`w-3 h-3 rounded-full bg-[#10b981] transition-transform hover:scale-125 ${theme === 'sage-green' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Sage Green" />
+                <button onClick={() => setTheme('blue-sky')} className={`w-3 h-3 rounded-full bg-[#3b82f6] transition-transform hover:scale-125 ${theme === 'blue-sky' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Blue Sky" />
+                <button onClick={() => setTheme('lavender')} className={`w-3 h-3 rounded-full bg-[#a78bfa] transition-transform hover:scale-125 ${theme === 'lavender' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Lavender Dream" />
+                <button onClick={() => setTheme('warm-peach')} className={`w-3 h-3 rounded-full bg-[#fb923c] transition-transform hover:scale-125 ${theme === 'warm-peach' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Warm Peach" />
+              </div>
+            )}
+            
             <button className="relative p-2 rounded-xl bg-white/5 text-slate-400 hover:text-white transition-colors">
               <Bell size={18} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full" />
