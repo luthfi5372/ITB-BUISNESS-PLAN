@@ -44,16 +44,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const { doctorName, date } = await req.json();
+    const { doctorName, date, psychologistId } = await req.json();
 
-    if (!doctorName || !date) {
+    if (!date) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     const appointment = await prisma.appointment.create({
       data: {
         userId: user.id,
-        doctorName,
+        ...(psychologistId ? { psychologistId } : {}),
+        ...(doctorName ? { doctorName } : {}),
         date: new Date(date),
       },
     });
