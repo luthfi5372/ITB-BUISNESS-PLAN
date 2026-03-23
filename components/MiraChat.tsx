@@ -37,22 +37,41 @@ export default function MiraChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
     const userMsg: Message = { id: Date.now(), role: "user", text: input };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const reply = MIRA_RESPONSES[responseIndex % MIRA_RESPONSES.length];
+    try {
+      const res = await fetch("/api/mira", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMsg.text }),
+      });
+      
+      const data = await res.json();
+      setIsTyping(false);
+      
+      if (data.reply) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, role: "mira", text: data.reply },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, role: "mira", text: data.error || "Maaf, Mira sedang sibuk. Coba lagi nanti ya 💙" },
+        ]);
+      }
+    } catch (error) {
+      setIsTyping(false);
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, role: "mira", text: reply },
+        { id: Date.now() + 1, role: "mira", text: "Terjadi kesalahan koneksi. Coba lagi nanti 💙" },
       ]);
-      setIsTyping(false);
-      setResponseIndex((i) => i + 1);
-    }, 1800);
+    }
   };
 
   return (

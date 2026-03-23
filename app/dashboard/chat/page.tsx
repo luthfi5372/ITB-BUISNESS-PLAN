@@ -14,16 +14,34 @@ export default function ChatPage() {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
 
-  const send = (text: string) => {
+  const send = async (text: string) => {
     if (!text.trim()) return;
     setMessages(prev => [...prev, { from: "user", text }]);
     setInput("");
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        from: "mira",
-        text: "Makasih udah mau cerita ke aku 💙 Aku dengar kamu. Mau lebih banyak cerita, atau kita coba latihan napas bareng dulu untuk tenangkan pikiran?"
+    
+    try {
+      const res = await fetch("/api/mira", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.reply) {
+        setMessages(prev => [...prev, { from: "mira", text: data.reply }]);
+      } else {
+        setMessages(prev => [...prev, { 
+          from: "mira", 
+          text: data.error || "Maaf, Mira sedang sibuk. Coba lagi nanti ya 💙" 
+        }]);
+      }
+    } catch (error) {
+      setMessages(prev => [...prev, { 
+        from: "mira", 
+        text: "Terjadi kesalahan koneksi. Coba lagi nanti 💙" 
       }]);
-    }, 1000);
+    }
   };
 
   return (
