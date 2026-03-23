@@ -15,10 +15,12 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
-  image         String?
-  role          String    @default("USER")
-  subscriptionTier String @default("FREE") // FREE, PREMIUM, ENTERPRISE
-  dailyChatCount Int      @default(0)
+  password          String?
+  emailVerified     DateTime?
+  image             String?
+  role              String    @default("USER")
+  subscriptionTier  String    @default("FREE") // FREE, PREMIUM, ENTERPRISE
+  dailyChatCount    Int       @default(0)
 
   streak            Int      @default(0)
   stabilityScore    Int      @default(80)
@@ -29,6 +31,8 @@ model User {
   mindfulnessPoints Int      @default(0) // Mata uang reward
   lastActive        DateTime @default(now())
 
+  accounts      Account[]
+  sessions      Session[]
   moodLogs      MoodLog[]
   posts         Post[]
   appointments  Appointment[]
@@ -38,6 +42,33 @@ model User {
   subscriptions Subscription[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model MoodLog {
