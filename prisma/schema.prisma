@@ -24,7 +24,8 @@ model User {
   stabilityScore    Int      @default(80)
   exp               Int      @default(0) // Poin pengalaman
   level             Int      @default(1) // Level user
-  title             String   @default("Zen Seeker") // Gelar otomatis
+  title             String   @default("Newbie") // Gelar otomatis
+  hasSeenTutorial   Boolean  @default(false) // Status Tutorial Barurd
   mindfulnessPoints Int      @default(0) // Mata uang reward
   lastActive        DateTime @default(now())
 

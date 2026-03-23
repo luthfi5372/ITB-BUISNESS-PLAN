@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -8,6 +8,7 @@ import {
   BookOpen, Flame, Calendar, MessageCircle, Trophy, ChevronRight,
   Stethoscope, BrainCircuit
 } from "lucide-react";
+import TutorialGame from "@/components/TutorialGame";
 
 const moods = [
   { emoji: <Frown size={22} />, label: "Buruk", color: "text-rose-400", bg: "bg-rose-500/20", value: 1 },
@@ -31,11 +32,21 @@ const stats = [
 
 export default function DashboardPage() {
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [showTutorial, setShowTutorial] = useState(false);
   const completedQuests = quests.filter(q => q.done).length;
   const totalXP = quests.filter(q => q.done).reduce((acc, q) => acc + q.xp, 0);
 
+  useEffect(() => {
+    // Pada mode demo, cek local storage. (Di app sungguhan: menggunakan user db)
+    const hasSeen = localStorage.getItem("hasSeenTutorial");
+    if (!hasSeen) {
+      setShowTutorial(true);
+    }
+  }, []);
+
   return (
     <div className="p-6 space-y-6">
+      {showTutorial && <TutorialGame email="" onComplete={() => setShowTutorial(false)} />}
 
       {/* Greeting */}
       <div>
