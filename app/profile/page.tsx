@@ -51,7 +51,7 @@ export default function ProfilePage() {
         className="max-w-2xl mx-auto space-y-8"
       >
         <div className="flex items-center gap-6">
-          <div className="w-24 h-24 bg-indigo-600 rounded-3xl flex items-center justify-center text-3xl font-black">
+          <div className="w-24 h-24 bg-theme-primary rounded-3xl flex items-center justify-center text-3xl font-black">
             {session.user?.name?.[0]?.toUpperCase() || 'U'}
           </div>
           <div>
@@ -70,10 +70,10 @@ export default function ProfilePage() {
               <h3 className="text-2xl font-bold">Level {stats.level}</h3>
             </div>
             <div className="space-y-2">
-              <p className="text-xl font-black text-indigo-400">{stats.title}</p>
+              <p className="text-xl font-black text-theme-primary">{stats.title}</p>
               <div className="w-full bg-slate-700 rounded-full h-3">
                 <motion.div 
-                  className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full" 
+                  className="bg-gradient-to-r from-theme-primary to-purple-500 h-3 rounded-full" 
                   initial={{ width: 0 }}
                   animate={{ width: `${Math.min((stats.exp % 1000) / 10)}%` }}
                   transition={{ duration: 1 }}
@@ -108,7 +108,7 @@ export default function ProfilePage() {
           <h3 className="text-2xl font-bold mb-2">Achievement System Active</h3>
           <p className="text-slate-400 mb-6">Level up notifications will appear here automatically!</p>
           <button 
-            className="bg-indigo-600 hover:bg-indigo-700 px-8 py-3 rounded-2xl font-bold text-white transition-all"
+            className="bg-theme-primary hover:bg-theme-primary px-8 py-3 rounded-2xl font-bold text-white transition-all"
             onClick={() => {
               localStorage.setItem('justLeveledUp', 'true');
               window.location.reload();

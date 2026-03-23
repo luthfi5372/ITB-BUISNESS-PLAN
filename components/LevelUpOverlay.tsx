@@ -77,7 +77,7 @@ export default function LevelUpOverlay({ level, newTitle, onClose }: LevelUpOver
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
-        className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-gradient-to-br from-indigo-950 via-slate-950 to-black backdrop-blur-xl overflow-hidden"
+        className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-gradient-to-br from-theme-primary via-slate-950 to-black backdrop-blur-xl overflow-hidden"
         style={{
           backgroundImage: isReducedMotion ? undefined : 'linear-gradient(45deg, #1e1b4b, #0f172a, #000000)',
           animation: isReducedMotion ? undefined : 'gradientShift 4s ease-in-out infinite',
@@ -191,7 +191,7 @@ export default function LevelUpOverlay({ level, newTitle, onClose }: LevelUpOver
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.h4
-                    className="text-6xl md:text-7xl font-black text-indigo-600 dark:text-indigo-400 tracking-tight"
+                    className="text-6xl md:text-7xl font-black text-theme-primary dark:text-theme-primary tracking-tight"
                     style={{ willChange: 'transform' }}
                   >
                     {displayedLevel}

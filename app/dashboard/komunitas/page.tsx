@@ -16,10 +16,10 @@ export default function KomunitasPage() {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-1">Komunitas Lokal</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-1">Komunitas Lokal</p>
           <h2 className="text-2xl font-black italic uppercase tracking-tighter">Forum Kesehatan Mental</h2>
         </div>
-        <button className="flex items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all">
+        <button className="flex items-center gap-2 px-5 py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all">
           <Plus size={16} /> Posting
         </button>
       </div>
@@ -27,7 +27,7 @@ export default function KomunitasPage() {
       {/* Category Filter */}
       <div className="flex gap-2 flex-wrap">
         {categories.map((cat, i) => (
-          <button key={cat} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${i === 0 ? "bg-indigo-600 text-white" : "bg-white/5 text-slate-500 hover:bg-white/10 hover:text-white border border-white/5"}`}>
+          <button key={cat} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${i === 0 ? "bg-theme-primary text-white" : "bg-white/5 text-slate-500 hover:bg-white/10 hover:text-white border border-white/5"}`}>
             {cat}
           </button>
         ))}
@@ -36,7 +36,7 @@ export default function KomunitasPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: "Anggota Aktif", value: "1.2k", icon: <Users size={16} className="text-indigo-400" /> },
+          { label: "Anggota Aktif", value: "1.2k", icon: <Users size={16} className="text-theme-primary" /> },
           { label: "Post Minggu Ini", value: "87", icon: <MessageCircle size={16} className="text-emerald-400" /> },
           { label: "Likes Diberikan", value: "342", icon: <Heart size={16} className="text-rose-400" /> },
         ].map((s, i) => (
@@ -56,7 +56,7 @@ export default function KomunitasPage() {
           >
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-gradient-to-br from-indigo-500/40 to-rose-500/40 rounded-xl flex items-center justify-center font-black text-sm text-white">
+                <div className="w-9 h-9 bg-gradient-to-br from-theme-primary/40 to-rose-500/40 rounded-xl flex items-center justify-center font-black text-sm text-white">
                   {post.user.charAt(0)}
                 </div>
                 <div>
@@ -64,12 +64,12 @@ export default function KomunitasPage() {
                   <p className="text-[9px] text-slate-600 font-medium">{post.time}</p>
                 </div>
               </div>
-              <span className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400">{post.category}</span>
+              <span className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full bg-theme-primary/10 text-theme-primary">{post.category}</span>
             </div>
             <p className="text-sm text-slate-300 font-medium leading-relaxed mb-4">{post.content}</p>
             <div className="flex items-center gap-5 text-[10px] font-black text-slate-600 uppercase tracking-widest">
               <button className="flex items-center gap-1.5 hover:text-rose-400 transition-colors"><Heart size={13} /> {post.likes}</button>
-              <button className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"><MessageCircle size={13} /> {post.replies} Balasan</button>
+              <button className="flex items-center gap-1.5 hover:text-theme-primary transition-colors"><MessageCircle size={13} /> {post.replies} Balasan</button>
             </div>
           </motion.div>
         ))}

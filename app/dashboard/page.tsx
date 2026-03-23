@@ -69,7 +69,7 @@ export default function DashboardPage() {
 
   const dynamicStats = [
     { label: "Hari Berturut", value: userData.streak.toString(), unit: "hari 🔥", color: "from-amber-500 to-orange-500" },
-    { label: "Total XP", value: userData.exp.toLocaleString("id-ID"), unit: "poin", color: "from-indigo-500 to-violet-500" },
+    { label: "Total XP", value: userData.exp.toLocaleString("id-ID"), unit: "poin", color: "from-theme-primary to-violet-500" },
     { label: "Mindfulness", value: userData.points.toString(), unit: "poin", color: "from-emerald-500 to-teal-500" },
     { label: "Level Saat Ini", value: userData.level.toString(), unit: userData.title, color: "from-rose-500 to-pink-500" },
   ];
@@ -103,7 +103,7 @@ export default function DashboardPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white/5 border border-white/10 rounded-3xl p-6"
         >
-          <p className="text-[9px] font-black uppercase tracking-widest text-indigo-400 mb-1">Daily Check-in</p>
+          <p className="text-[9px] font-black uppercase tracking-widest text-theme-primary mb-1">Daily Check-in</p>
           <h2 className="text-lg font-black italic uppercase tracking-tighter text-white mb-6">Mood Hari Ini?</h2>
           <div className="grid grid-cols-3 gap-3 mb-5">
             {moods.map((mood) => (
@@ -118,7 +118,7 @@ export default function DashboardPage() {
             ))}
           </div>
           {selectedMood
-            ? <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all">Simpan Mood +30 XP</motion.button>
+            ? <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all">Simpan Mood +30 XP</motion.button>
             : <p className="text-center text-[10px] text-slate-600 italic">Pilih mood untuk mulai harimu</p>
           }
 
@@ -126,8 +126,8 @@ export default function DashboardPage() {
             <p className="text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3">7 Hari Terakhir</p>
             <div className="flex items-end gap-1.5 h-10">
               {[6, 4, 7, 5, 8, 6, 9].map((v, i) => (
-                <div key={i} className="flex-1 bg-indigo-500/20 rounded-sm relative overflow-hidden h-full">
-                  <div className="absolute bottom-0 left-0 right-0 bg-indigo-500/60 rounded-sm" style={{ height: `${(v / 10) * 100}%` }} />
+                <div key={i} className="flex-1 bg-theme-primary/20 rounded-sm relative overflow-hidden h-full">
+                  <div className="absolute bottom-0 left-0 right-0 bg-theme-primary/60 rounded-sm" style={{ height: `${(v / 10) * 100}%` }} />
                 </div>
               ))}
             </div>
@@ -166,7 +166,7 @@ export default function DashboardPage() {
                 </div>
                 <div className={`p-2 rounded-xl shrink-0 transition-colors duration-300 ${quest.done ? "bg-emerald-500/10 text-emerald-400" : "bg-white/5 text-slate-500 group-hover:bg-amber-500/10 group-hover:text-amber-400"}`}>{quest.icon}</div>
                 <div className="flex-1 min-w-0">
-                  <p className={`text-sm font-black transition-colors duration-300 ${quest.done ? "line-through text-slate-500" : "text-white group-hover:text-indigo-300"}`}>{quest.title}</p>
+                  <p className={`text-sm font-black transition-colors duration-300 ${quest.done ? "line-through text-slate-500" : "text-white group-hover:text-theme-primary"}`}>{quest.title}</p>
                   <p className="text-[10px] text-slate-600 font-medium">{quest.desc}</p>
                 </div>
                 <div className={`text-[10px] font-black px-2.5 py-1 rounded-full shrink-0 transition-colors duration-300 ${quest.done ? "bg-emerald-500/10 text-emerald-400" : "bg-white/5 text-slate-500 group-hover:bg-amber-500/10 group-hover:text-amber-400"}`}>+{quest.xp} XP</div>
@@ -180,12 +180,12 @@ export default function DashboardPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Mira AI */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
-          className="group bg-gradient-to-br from-indigo-600/20 to-violet-600/10 border border-indigo-500/20 rounded-3xl p-6 relative overflow-hidden hover:border-indigo-400/40 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500"
+          className="group bg-gradient-to-br from-theme-primary/20 to-violet-600/10 border border-theme-primary/20 rounded-3xl p-6 relative overflow-hidden hover:border-theme-primary/40 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500"
         >
-          <div className="absolute -right-8 -top-8 w-40 h-40 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-400/20 group-hover:scale-110 transition-all duration-700 animate-[pulse_4s_ease-in-out_infinite]" />
+          <div className="absolute -right-8 -top-8 w-40 h-40 bg-theme-primary/10 rounded-full blur-2xl group-hover:bg-theme-primary/20 group-hover:scale-110 transition-all duration-700 animate-[pulse_4s_ease-in-out_infinite]" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] group-hover:scale-110 transition-transform duration-300">
+              <div className="w-10 h-10 bg-theme-primary rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] group-hover:scale-110 transition-transform duration-300">
                 <BrainCircuit size={18} className="text-white" />
               </div>
               <div>
@@ -194,7 +194,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <p className="text-xs text-slate-400 font-medium italic mb-5 leading-relaxed">&ldquo;Hai {userData.name}! Gimana harimu hari ini? 🌙&rdquo;</p>
-            <Link href="/dashboard/chat" className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:shadow-[0_10px_20px_rgba(99,102,241,0.3)] hover:-translate-y-0.5 transition-all duration-300">
+            <Link href="/dashboard/chat" className="flex items-center justify-center gap-2 w-full py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl hover:shadow-[0_10px_20px_rgba(99,102,241,0.3)] hover:-translate-y-0.5 transition-all duration-300">
               <MessageCircle size={14} /> Mulai Chat
             </Link>
           </div>
@@ -205,13 +205,13 @@ export default function DashboardPage() {
           className="bg-white/5 border border-white/10 rounded-3xl p-6"
         >
           <div className="flex justify-between items-center mb-5">
-            <p className="text-[9px] font-black uppercase tracking-widest text-indigo-400">Jadwal Konseling</p>
+            <p className="text-[9px] font-black uppercase tracking-widest text-theme-primary">Jadwal Konseling</p>
             <Calendar size={16} className="text-slate-600" />
           </div>
           <div className="space-y-3">
-            <div className="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center gap-3">
-              <div className="w-9 h-9 bg-indigo-600/20 rounded-xl flex items-center justify-center"><Stethoscope size={14} className="text-indigo-400" /></div>
-              <div><p className="text-sm font-black text-white">Dr. Sarah Wijaya</p><p className="text-[10px] text-indigo-400 font-bold">Besok, 15.00 WIB</p></div>
+            <div className="p-4 bg-theme-primary/10 border border-theme-primary/20 rounded-2xl flex items-center gap-3">
+              <div className="w-9 h-9 bg-theme-primary/20 rounded-xl flex items-center justify-center"><Stethoscope size={14} className="text-theme-primary" /></div>
+              <div><p className="text-sm font-black text-white">Dr. Sarah Wijaya</p><p className="text-[10px] text-theme-primary font-bold">Besok, 15.00 WIB</p></div>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center gap-3">
               <div className="w-9 h-9 bg-white/5 rounded-xl flex items-center justify-center"><Stethoscope size={14} className="text-slate-600" /></div>
@@ -253,7 +253,7 @@ export default function DashboardPage() {
               {rank:2, name: userData.exp <= 2650 && userData.exp > 1000 ? userData.name : "Putri N.", xp: userData.exp <= 2650 && userData.exp > 1000 ? userData.exp.toLocaleString("id-ID") : "2.410", me: userData.exp <= 2650 && userData.exp > 1000},
               {rank:3, name: userData.exp <= 1000 ? userData.name : "Alex S.", xp: userData.exp <= 1000 ? userData.exp.toLocaleString("id-ID") : "1.890", me: userData.exp <= 1000}
             ].map(p=>(
-              <div key={p.rank} className={`flex items-center gap-3 py-1.5 ${p.me?"text-indigo-400":"text-slate-500"}`}>
+              <div key={p.rank} className={`flex items-center gap-3 py-1.5 ${p.me?"text-theme-primary":"text-slate-500"}`}>
                 <span className="text-[10px] font-black w-4">#{p.rank}</span>
                 <span className="flex-1 text-[11px] font-black">{p.name}</span>
                 <span className="text-[10px]">{p.xp} XP</span>

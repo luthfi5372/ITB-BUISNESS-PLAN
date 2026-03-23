@@ -63,7 +63,7 @@ export default function PsychologistGrid() {
         </div>
         <h2 className="text-5xl font-black italic tracking-tighter uppercase mb-4">
           Bicara dengan<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-indigo-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-theme-primary">
             Ahlinya.
           </span>
         </h2>
@@ -102,8 +102,8 @@ export default function PsychologistGrid() {
 
             {/* BADGE TERVERIFIKASI */}
             <div className="flex items-center gap-1.5 mb-1">
-              <CheckCircle2 size={12} className="text-indigo-400" />
-              <span className="text-[8px] text-indigo-400 font-black uppercase tracking-widest">Terverifikasi</span>
+              <CheckCircle2 size={12} className="text-theme-primary" />
+              <span className="text-[8px] text-theme-primary font-black uppercase tracking-widest">Terverifikasi</span>
             </div>
 
             <h3 className="text-base font-black text-white mb-0.5">{p.name}</h3>
@@ -135,8 +135,8 @@ export default function PsychologistGrid() {
                   className="mt-5 border-t border-white/5 pt-5 overflow-hidden"
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <Calendar size={12} className="text-indigo-400" />
-                    <p className="text-[9px] font-black uppercase tracking-widest text-indigo-400">Pilih Jadwal</p>
+                    <Calendar size={12} className="text-theme-primary" />
+                    <p className="text-[9px] font-black uppercase tracking-widest text-theme-primary">Pilih Jadwal</p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mb-4">
                     {p.slots.map((slot) => (

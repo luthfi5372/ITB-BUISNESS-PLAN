@@ -8,7 +8,7 @@ import {
   Users, Trophy, Settings, LogOut,
   LayoutDashboard, Menu, Bell, MessageCircle
 } from "lucide-react";
-import { useTheme } from "next-themes";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { useEffect } from "react";
 
 const navLinks = [
@@ -24,10 +24,6 @@ const navLinks = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => { setMounted(true); }, []);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex overflow-hidden">
@@ -46,7 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Logo */}
         <div className="p-6 border-b border-white/5">
           <Link href="/" className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+            <div className="bg-gradient-to-br from-theme-primary to-theme-primary p-2 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)]">
               <BrainCircuit size={18} className="text-white" />
             </div>
             <span className="text-base font-black italic uppercase tracking-tighter">MindMate+</span>
@@ -56,12 +52,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* User Card */}
         <div className="group p-4 m-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-rose-500 rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all duration-300">
+            <div className="w-10 h-10 bg-gradient-to-br from-theme-primary to-rose-500 rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all duration-300">
               L
             </div>
             <div>
-              <p className="text-sm font-black text-white group-hover:text-indigo-100 transition-colors">Luthfi</p>
-              <p className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest group-hover:text-indigo-300 transition-colors">Level 12 Warrior</p>
+              <p className="text-sm font-black text-white group-hover:text-theme-primary transition-colors">Luthfi</p>
+              <p className="text-[10px] text-theme-primary font-bold uppercase tracking-widest group-hover:text-theme-primary transition-colors">Level 12 Warrior</p>
             </div>
           </div>
           <div className="mt-3">
@@ -69,7 +65,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span>XP Progress</span><span className="group-hover:text-slate-300 transition-colors">2840 / 3500</span>
             </div>
             <div className="h-1.5 bg-white/5 rounded-full overflow-hidden relative">
-              <div className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full transition-all duration-1000 ease-out" style={{ width: "81%" }} />
+              <div className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-theme-primary to-violet-500 rounded-full transition-all duration-1000 ease-out" style={{ width: "81%" }} />
               <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
             </div>
           </div>
@@ -87,11 +83,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className={`
                   group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all duration-300
                   ${isActive
-                    ? "bg-indigo-600/20 text-indigo-400 border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.1)]"
+                    ? "bg-theme-primary/20 text-theme-primary border border-theme-primary/20 shadow-[0_0_15px_rgba(99,102,241,0.1)]"
                     : "text-slate-500 hover:text-white hover:bg-white/5 hover:translate-x-1"}
                 `}
               >
-                <div className={`${isActive ? "scale-110" : "group-hover:scale-110 group-hover:text-indigo-300"} transition-transform duration-300`}>
+                <div className={`${isActive ? "scale-110" : "group-hover:scale-110 group-hover:text-theme-primary"} transition-transform duration-300`}>
                   {item.icon}
                 </div>
                 {item.label}
@@ -130,21 +126,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <div className="flex items-center gap-3">
-            {/* Theme Switcher */}
-            {mounted && (
-              <div className="flex items-center gap-1.5 mr-2 bg-white/5 p-1 rounded-full border border-white/10 shrink-0">
-                <button onClick={() => setTheme('sage-green')} className={`w-3 h-3 rounded-full bg-[#10b981] transition-transform hover:scale-125 ${theme === 'sage-green' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Sage Green" />
-                <button onClick={() => setTheme('blue-sky')} className={`w-3 h-3 rounded-full bg-[#3b82f6] transition-transform hover:scale-125 ${theme === 'blue-sky' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Blue Sky" />
-                <button onClick={() => setTheme('lavender')} className={`w-3 h-3 rounded-full bg-[#a78bfa] transition-transform hover:scale-125 ${theme === 'lavender' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Lavender Dream" />
-                <button onClick={() => setTheme('warm-peach')} className={`w-3 h-3 rounded-full bg-[#fb923c] transition-transform hover:scale-125 ${theme === 'warm-peach' ? 'ring-1 ring-white ring-offset-1 ring-offset-[#050508]' : ''}`} title="Warm Peach" />
-              </div>
-            )}
+            {/* Theme Switcher Widget */}
+            <div className="mr-2">
+              <ThemeSwitcher />
+            </div>
             
             <button className="relative p-2 rounded-xl bg-white/5 text-slate-400 hover:text-white transition-colors">
               <Bell size={18} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full" />
             </button>
-            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-rose-500 rounded-xl flex items-center justify-center font-black text-xs">
+            <div className="w-8 h-8 bg-gradient-to-br from-theme-primary to-rose-500 rounded-xl flex items-center justify-center font-black text-xs">
               L
             </div>
           </div>

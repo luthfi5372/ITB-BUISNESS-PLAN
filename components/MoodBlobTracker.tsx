@@ -8,7 +8,7 @@ const MOOD_DATA = [
   { score: 2, emoji: "😔", label: "Sedih", color: "from-blue-700 to-sky-600", glow: "rgba(14,165,233,0.5)", blob: "rgba(14,165,233,0.4)" },
   { score: 3, emoji: "😟", label: "Gelisah", color: "from-sky-600 to-cyan-500", glow: "rgba(6,182,212,0.5)", blob: "rgba(6,182,212,0.4)" },
   { score: 4, emoji: "😐", label: "Biasa Aja", color: "from-slate-600 to-slate-500", glow: "rgba(100,116,139,0.5)", blob: "rgba(100,116,139,0.4)" },
-  { score: 5, emoji: "🙂", label: "Cukup Baik", color: "from-indigo-600 to-violet-500", glow: "rgba(99,102,241,0.5)", blob: "rgba(99,102,241,0.4)" },
+  { score: 5, emoji: "🙂", label: "Cukup Baik", color: "from-theme-primary to-violet-500", glow: "rgba(99,102,241,0.5)", blob: "rgba(99,102,241,0.4)" },
   { score: 6, emoji: "😊", label: "Baik", color: "from-violet-600 to-purple-500", glow: "rgba(139,92,246,0.5)", blob: "rgba(139,92,246,0.4)" },
   { score: 7, emoji: "😄", label: "Senang", color: "from-purple-500 to-fuchsia-500", glow: "rgba(168,85,247,0.5)", blob: "rgba(168,85,247,0.4)" },
   { score: 8, emoji: "🤩", label: "Sangat Baik", color: "from-amber-500 to-orange-400", glow: "rgba(251,191,36,0.5)", blob: "rgba(251,191,36,0.4)" },
@@ -98,7 +98,7 @@ export default function MoodBlobTracker() {
             exit={{ opacity: 0, y: -8 }}
             className="bg-white/5 border border-white/8 rounded-2xl p-4"
           >
-            <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-1.5">
+            <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-1.5">
               ⚡ Mira AI Insight
             </p>
             <p className="text-xs text-slate-300 font-medium leading-relaxed">

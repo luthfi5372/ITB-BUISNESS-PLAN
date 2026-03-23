@@ -69,17 +69,17 @@ export default function PencapaianPage() {
 
         {/* Leaderboard */}
         <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-5">Leaderboard Sekolah</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-5">Leaderboard Sekolah</p>
           <div className="space-y-3">
             {leaderboard.map((p) => (
-              <div key={p.rank} className={`flex items-center gap-4 p-4 rounded-2xl border ${p.isMe ? "bg-indigo-500/10 border-indigo-500/20" : "bg-white/[0.02] border-white/5"}`}>
+              <div key={p.rank} className={`flex items-center gap-4 p-4 rounded-2xl border ${p.isMe ? "bg-theme-primary/10 border-theme-primary/20" : "bg-white/[0.02] border-white/5"}`}>
                 <span className={`text-lg font-black w-6 text-center ${p.rank === 1 ? "text-amber-400" : p.rank === 2 ? "text-slate-400" : p.rank === 3 ? "text-amber-700" : "text-slate-600"}`}>
                   {p.rank === 1 ? "🥇" : p.rank === 2 ? "🥈" : p.rank === 3 ? "🥉" : `#${p.rank}`}
                 </span>
-                <div className="w-8 h-8 bg-gradient-to-br from-indigo-500/40 to-rose-500/40 rounded-lg flex items-center justify-center font-black text-xs text-white">
+                <div className="w-8 h-8 bg-gradient-to-br from-theme-primary/40 to-rose-500/40 rounded-lg flex items-center justify-center font-black text-xs text-white">
                   {p.name.charAt(0)}
                 </div>
-                <p className={`flex-1 text-sm font-black ${p.isMe ? "text-indigo-300" : "text-white"}`}>{p.name}</p>
+                <p className={`flex-1 text-sm font-black ${p.isMe ? "text-theme-primary" : "text-white"}`}>{p.name}</p>
                 <p className="text-[10px] font-black text-slate-500">{p.xp} XP</p>
               </div>
             ))}

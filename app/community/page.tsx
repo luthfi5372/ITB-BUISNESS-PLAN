@@ -74,7 +74,7 @@ export default function CommunityPage() {
     <div className="min-h-screen bg-[#FBFBFE] p-6 lg:p-12">
       <div className="max-w-4xl mx-auto">
         <header className="mb-8">
-          <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-700 mb-4 inline-block">
+          <Link href="/dashboard" className="text-theme-primary hover:text-theme-primary mb-4 inline-block">
             ← Kembali ke Dashboard
           </Link>
           <h1 className="text-4xl font-black tracking-tight">Komunitas Dukungan</h1>
@@ -85,7 +85,7 @@ export default function CommunityPage() {
         <div className="mb-8">
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition flex items-center gap-2"
+            className="bg-theme-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-theme-primary transition flex items-center gap-2"
           >
             <Plus size={20} />
             Bagikan Cerita
@@ -105,7 +105,7 @@ export default function CommunityPage() {
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
                 placeholder="Bagikan pengalamanmu hari ini..."
-                className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary resize-none"
                 rows={4}
                 required
               />
@@ -116,7 +116,7 @@ export default function CommunityPage() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Lokasi (opsional)"
-                  className="flex-1 p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                  className="flex-1 p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                 />
 
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -142,7 +142,7 @@ export default function CommunityPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-700 transition disabled:opacity-50"
+                  className="bg-theme-primary text-white px-6 py-2 rounded-xl font-bold hover:bg-theme-primary transition disabled:opacity-50"
                 >
                   {loading ? "Mengirim..." : "Bagikan"}
                 </button>
@@ -167,14 +167,14 @@ export default function CommunityPage() {
                 className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-theme-primary rounded-full flex items-center justify-center flex-shrink-0">
                     {post.isAnon ? (
-                      <User size={20} className="text-indigo-600" />
+                      <User size={20} className="text-theme-primary" />
                     ) : (
                       post.user.image ? (
                         <img src={post.user.image} alt="Avatar" className="w-10 h-10 rounded-full" />
                       ) : (
-                        <User size={20} className="text-indigo-600" />
+                        <User size={20} className="text-theme-primary" />
                       )
                     )}
                   </div>

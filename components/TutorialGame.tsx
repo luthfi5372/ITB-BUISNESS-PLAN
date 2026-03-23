@@ -45,7 +45,7 @@ export default function TutorialGame({ email, onComplete }: { email: string, onC
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          className="bg-[#0a0a12]/95 backdrop-blur-3xl border border-indigo-500/30 p-8 rounded-3xl max-w-md w-full text-center shadow-[0_0_50px_rgba(99,102,241,0.2)]"
+          className="bg-[#0a0a12]/95 backdrop-blur-3xl border border-theme-primary/30 p-8 rounded-3xl max-w-md w-full text-center shadow-[0_0_50px_rgba(99,102,241,0.2)]"
         >
           <div className="text-5xl mb-6">✨</div>
           <h2 className="text-2xl font-black italic uppercase tracking-tighter text-white mb-4">
@@ -61,7 +61,7 @@ export default function TutorialGame({ email, onComplete }: { email: string, onC
             </span>
             <button
               onClick={handleNext}
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-bold transition-all text-xs uppercase tracking-widest hover:scale-105 active:scale-95"
+              className="bg-theme-primary hover:bg-theme-primary text-white px-5 py-2.5 rounded-xl font-bold transition-all text-xs uppercase tracking-widest hover:scale-105 active:scale-95"
             >
               {step === tutorialSteps.length - 1 ? "Mulai Main!" : "Lanjut >"}
             </button>

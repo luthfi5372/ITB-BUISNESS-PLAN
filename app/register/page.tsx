@@ -61,7 +61,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#050508] text-white flex items-center justify-center px-4 py-20 relative overflow-hidden">
       {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-indigo-600/10 rounded-full blur-[140px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-theme-primary/10 rounded-full blur-[140px]" />
         <div className="absolute bottom-[5%] right-[-5%] w-[50%] h-[50%] bg-rose-600/8 rounded-full blur-[120px]" />
       </div>
 
@@ -74,7 +74,7 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="text-center mb-10">
           <Link href="/" className="inline-flex items-center gap-3 group">
-            <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2.5 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:scale-105 transition-transform">
+            <div className="bg-gradient-to-br from-theme-primary to-theme-primary p-2.5 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:scale-105 transition-transform">
               <BrainCircuit size={22} className="text-white" />
             </div>
             <span className="text-2xl font-black italic uppercase tracking-tighter text-white">MindMate+</span>
@@ -106,7 +106,7 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="Nama kamu"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:bg-white/8 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-theme-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
             </div>
@@ -122,7 +122,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="kamu@mindmate.id"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:bg-white/8 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-theme-primary/50 focus:bg-white/8 transition-all"
                 />
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   placeholder="Min. 6 karakter"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-11 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:bg-white/8 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-11 pr-11 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-theme-primary/50 focus:bg-white/8 transition-all"
                 />
                 <button
                   type="button"
@@ -156,7 +156,7 @@ export default function RegisterPage() {
               disabled={loading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-800 disabled:text-indigo-400 text-white font-black text-[10px] uppercase tracking-widest rounded-2xl shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.4)] transition-all flex items-center justify-center gap-3"
+              className="w-full py-4 bg-theme-primary hover:bg-theme-primary disabled:bg-theme-primary disabled:text-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-2xl shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.4)] transition-all flex items-center justify-center gap-3"
             >
               {loading ? "Mendaftarkan..." : (
                 <>Buat Akun<ArrowRight size={16} /></>
@@ -185,7 +185,7 @@ export default function RegisterPage() {
           <div className="mt-8 text-center">
             <p className="text-slate-500 text-xs font-medium">
               Sudah punya akun?{" "}
-              <Link href="/login" className="text-indigo-400 font-black hover:text-indigo-300 transition-colors">
+              <Link href="/login" className="text-theme-primary font-black hover:text-theme-primary transition-colors">
                 Masuk
               </Link>
             </p>

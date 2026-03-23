@@ -76,7 +76,7 @@ export default function EmergencyPage() {
     <div className="min-h-screen bg-[#FBFBFE] p-6 lg:p-12">
       <div className="max-w-4xl mx-auto">
         <header className="mb-8">
-          <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-700 mb-4 inline-block">
+          <Link href="/dashboard" className="text-theme-primary hover:text-theme-primary mb-4 inline-block">
             ← Kembali ke Dashboard
           </Link>
           <h1 className="text-4xl font-black tracking-tight text-red-600">Dukungan Darurat</h1>
@@ -103,7 +103,7 @@ export default function EmergencyPage() {
               </h2>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="bg-indigo-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-indigo-700 transition flex items-center gap-2"
+                className="bg-theme-primary text-white px-4 py-2 rounded-xl font-bold hover:bg-theme-primary transition flex items-center gap-2"
               >
                 <UserPlus size={16} />
                 Tambah
@@ -151,7 +151,7 @@ export default function EmergencyPage() {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                     required
                   />
                 </div>
@@ -162,7 +162,7 @@ export default function EmergencyPage() {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                     required
                   />
                 </div>
@@ -172,7 +172,7 @@ export default function EmergencyPage() {
                   <select
                     value={formData.relation}
                     onChange={(e) => setFormData({ ...formData, relation: e.target.value })}
-                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                     required
                   >
                     <option value="">Pilih hubungan...</option>
@@ -205,7 +205,7 @@ export default function EmergencyPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-700 transition disabled:opacity-50"
+                    className="bg-theme-primary text-white px-6 py-2 rounded-xl font-bold hover:bg-theme-primary transition disabled:opacity-50"
                   >
                     {loading ? "Menyimpan..." : "Simpan"}
                   </button>

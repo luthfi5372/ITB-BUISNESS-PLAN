@@ -11,7 +11,7 @@ const COMMUNITIES = [
     members: 342,
     online: 28,
     tag: "Sekolah",
-    tagColor: "bg-indigo-500/20 text-indigo-400 border-indigo-500/20",
+    tagColor: "bg-theme-primary/20 text-theme-primary border-theme-primary/20",
     emoji: "🏫",
   },
   {
@@ -38,12 +38,12 @@ const COMMUNITIES = [
 
 const B2B_STATS = [
   { label: "Tingkat Stres Siswa Turun", value: "15%", icon: TrendingDown, color: "text-emerald-400" },
-  { label: "Partisipasi Check-in Harian", value: "89%", icon: BarChart3, color: "text-indigo-400" },
+  { label: "Partisipasi Check-in Harian", value: "89%", icon: BarChart3, color: "text-theme-primary" },
   { label: "Kasus Terdeteksi Dini", value: "47", icon: Shield, color: "text-rose-400" },
 ];
 
 const BADGES = [
-  { name: "7 Days Journaling", emoji: "✍️", desc: "Tulis 7 hari berturut-turut", color: "from-violet-500 to-indigo-500" },
+  { name: "7 Days Journaling", emoji: "✍️", desc: "Tulis 7 hari berturut-turut", color: "from-violet-500 to-theme-primary" },
   { name: "Calm Voyager", emoji: "🌊", desc: "Selesaikan 10 sesi napas", color: "from-cyan-500 to-blue-500" },
   { name: "Mood Master", emoji: "🌟", desc: "Track mood 30 hari berturut", color: "from-amber-500 to-orange-500" },
   { name: "Social Spark", emoji: "🔥", desc: "Aktif di komunitas 7 hari", color: "from-rose-500 to-pink-500" },
@@ -63,7 +63,7 @@ export default function CommunitySection() {
             </div>
             <h2 className="text-4xl font-black italic tracking-tighter uppercase mb-3">
               Temukan<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-indigo-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-theme-primary">
                 Komunitas Terdekatmu.
               </span>
             </h2>
@@ -97,7 +97,7 @@ export default function CommunitySection() {
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse block" />
                       <span className="text-[10px] font-black text-emerald-400">{c.online} Online</span>
                     </div>
-                    <button className="mt-2 text-[9px] font-black uppercase tracking-wider text-indigo-400 hover:text-white transition-colors">
+                    <button className="mt-2 text-[9px] font-black uppercase tracking-wider text-theme-primary hover:text-white transition-colors">
                       Bergabung →
                     </button>
                   </div>
@@ -141,23 +141,23 @@ export default function CommunitySection() {
 
       {/* B2B DASHBOARD PREVIEW */}
       <section className="relative z-10 max-w-7xl mx-auto px-8 py-24 border-t border-white/5">
-        <div className="bg-gradient-to-br from-indigo-950/40 to-slate-900/60 border border-indigo-500/20 rounded-[3rem] p-10 lg:p-16">
+        <div className="bg-gradient-to-br from-theme-primary/40 to-slate-900/60 border border-theme-primary/20 rounded-[3rem] p-10 lg:p-16">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-full mb-6">
-                <Building2 size={14} className="text-indigo-400" />
-                <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest">MindMate+ For Schools</span>
+              <div className="inline-flex items-center gap-2 bg-theme-primary/10 border border-theme-primary/20 px-4 py-2 rounded-full mb-6">
+                <Building2 size={14} className="text-theme-primary" />
+                <span className="text-[10px] font-black text-theme-primary uppercase tracking-widest">MindMate+ For Schools</span>
               </div>
               <h2 className="text-4xl font-black italic tracking-tighter uppercase mb-4">
                 Dashboard<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-violet-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-violet-400">
                   Guru BK Anonim.
                 </span>
               </h2>
               <p className="text-slate-400 font-medium leading-relaxed mb-8 text-sm">
                 Pantau kesehatan mental siswa secara agregat dan anonim. Deteksi dini tanpa melanggar privasi.
               </p>
-              <button className="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-2xl text-[11px] font-black uppercase tracking-widest text-white transition-all active:scale-95 shadow-lg shadow-indigo-600/20">
+              <button className="px-8 py-4 bg-theme-primary hover:bg-theme-primary rounded-2xl text-[11px] font-black uppercase tracking-widest text-white transition-all active:scale-95 shadow-lg shadow-theme-primary/20">
                 Daftar Institusi Kami
               </button>
             </div>

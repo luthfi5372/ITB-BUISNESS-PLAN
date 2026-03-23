@@ -13,6 +13,7 @@ const config: Config = {
           primary: 'rgb(var(--accent-primary) / <alpha-value>)',
           glow: 'var(--accent-glow)',
         },
+        'theme-primary': 'rgb(var(--theme-primary) / <alpha-value>)',
         'mind-violet': '#8B5CF6',
         'mind-pink': '#EC4899',
         'mind-cyan': '#06B6D4',

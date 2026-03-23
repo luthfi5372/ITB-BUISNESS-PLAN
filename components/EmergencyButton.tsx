@@ -77,9 +77,9 @@ export default function EmergencyButton() {
                       <motion.div
                         animate={{ scale: [1, 1.3, 1] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-indigo-500/30 to-violet-500/30 border border-indigo-400/30 flex items-center justify-center mb-4"
+                        className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-theme-primary/30 to-violet-500/30 border border-theme-primary/30 flex items-center justify-center mb-4"
                       >
-                        <Wind size={32} className="text-indigo-400" />
+                        <Wind size={32} className="text-theme-primary" />
                       </motion.div>
                       <h3 className="text-lg font-black italic tracking-tighter text-white mb-1">Tarik Napas Bersama</h3>
                       <p className="text-xs text-slate-400 mb-1">Ikuti ritme di atas. Tarik — Tahan — Hembuskan.</p>

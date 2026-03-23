@@ -19,11 +19,11 @@ export default function JournalPage() {
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-1">Catatan Pribadi</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-1">Catatan Pribadi</p>
           <h2 className="text-2xl font-black italic uppercase tracking-tighter">Jurnal Harian</h2>
         </div>
         <button onClick={() => setShowNew(true)}
-          className="flex items-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
+          className="flex items-center gap-2 px-5 py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
         >
           <Plus size={16} /> Tulis Baru
         </button>
@@ -40,14 +40,14 @@ export default function JournalPage() {
           <h3 className="text-lg font-black italic uppercase tracking-tighter mb-6">Entri Baru</h3>
           <div className="space-y-4">
             <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Judul jurnal hari ini..."
-              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-theme-primary/50 transition-all"
             />
             <textarea value={content} onChange={e => setContent(e.target.value)} rows={5} placeholder="Ceritakan harimu... bagaimana perasaanmu? apa yang terjadi hari ini?"
-              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 transition-all resize-none"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder:text-slate-600 focus:outline-none focus:border-theme-primary/50 transition-all resize-none"
             />
             <div className="flex gap-4">
               <button onClick={() => { setShowNew(false); setTitle(""); setContent(""); }}
-                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
+                className="px-6 py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
               >
                 Simpan +50 XP
               </button>
@@ -69,11 +69,11 @@ export default function JournalPage() {
               <span className="text-[9px] text-slate-600 font-bold uppercase tracking-widest">{entry.date}</span>
               <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${
                 entry.mood === "Luar Biasa" ? "bg-emerald-500/10 text-emerald-400" :
-                entry.mood === "Baik" ? "bg-indigo-500/10 text-indigo-400" :
+                entry.mood === "Baik" ? "bg-theme-primary/10 text-theme-primary" :
                 "bg-amber-500/10 text-amber-400"
               }`}>{entry.mood}</span>
             </div>
-            <h3 className="text-base font-black text-white mb-2 group-hover:text-indigo-300 transition-colors">{entry.title}</h3>
+            <h3 className="text-base font-black text-white mb-2 group-hover:text-theme-primary transition-colors">{entry.title}</h3>
             <p className="text-sm text-slate-500 font-medium">{entry.preview}</p>
           </motion.div>
         ))}

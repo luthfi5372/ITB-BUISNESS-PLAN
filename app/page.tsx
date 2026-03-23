@@ -9,21 +9,20 @@ import {
   Lock, ShieldCheck, Users, TrendingDown, Building, 
   CheckCircle2, Smile, Activity, Stethoscope 
 } from "lucide-react";
-import { useTheme } from "next-themes";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function MasterLandingPage() {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
   useEffect(() => { setMounted(true); }, []);
 
   if (!mounted) return <div className="min-h-screen bg-[#050508]" />;
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white selection:bg-indigo-500/30 overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#050508] text-white selection:bg-theme-primary/30 overflow-x-hidden relative">
       
       {/* --- BACKGROUND BLOBS CYBER-ZEN --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-indigo-600/10 rounded-full blur-[100px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-theme-primary/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-[5%] right-[-5%] w-[50%] h-[50%] bg-rose-600/10 rounded-full blur-[80px]" />
       </div>
 
@@ -33,32 +32,29 @@ export default function MasterLandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-white/5 bg-[#050508]/60 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)] group-hover:scale-105 transition-transform">
+            <div className="bg-gradient-to-br from-theme-primary to-theme-primary p-2 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)] group-hover:scale-105 transition-transform">
               <BrainCircuit size={20} className="text-white" />
             </div>
             <span className="text-xl font-black italic uppercase tracking-tighter text-white">MindMate+</span>
           </Link>
           
           <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-            <a href="#fitur" className="hover:text-indigo-400 transition-colors">Fitur</a>
-            <a href="#profesional" className="hover:text-indigo-400 transition-colors">Konseling</a>
-            <a href="#komunitas" className="hover:text-indigo-400 transition-colors">Komunitas</a>
-            <a href="#harga" className="hover:text-indigo-400 transition-colors">Harga</a>
+            <a href="#fitur" className="hover:text-theme-primary transition-colors">Fitur</a>
+            <a href="#profesional" className="hover:text-theme-primary transition-colors">Konseling</a>
+            <a href="#komunitas" className="hover:text-theme-primary transition-colors">Komunitas</a>
+            <a href="#harga" className="hover:text-theme-primary transition-colors">Harga</a>
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Theme Switcher */}
-            <div className="flex items-center gap-2 mr-4 bg-white/5 p-1.5 rounded-full border border-white/10">
-              <button onClick={() => setTheme('sage-green')} className={`w-3.5 h-3.5 rounded-full bg-[#10b981] transition-transform hover:scale-125 ${theme === 'sage-green' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Sage Green" />
-              <button onClick={() => setTheme('blue-sky')} className={`w-3.5 h-3.5 rounded-full bg-[#3b82f6] transition-transform hover:scale-125 ${theme === 'blue-sky' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Blue Sky" />
-              <button onClick={() => setTheme('lavender')} className={`w-3.5 h-3.5 rounded-full bg-[#a78bfa] transition-transform hover:scale-125 ${theme === 'lavender' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Lavender Dream" />
-              <button onClick={() => setTheme('warm-peach')} className={`w-3.5 h-3.5 rounded-full bg-[#fb923c] transition-transform hover:scale-125 ${theme === 'warm-peach' ? 'ring-2 ring-white ring-offset-2 ring-offset-[#050508]' : ''}`} title="Warm Peach" />
+            {/* Theme Switcher Widget */}
+            <div className="mr-2">
+              <ThemeSwitcher />
             </div>
 
             <Link href="/login" className="text-[10px] font-black uppercase tracking-widest text-slate-300 hover:text-white transition-colors">
               Masuk
             </Link>
-            <Link href="/register" className="px-6 py-2.5 bg-indigo-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all active:scale-95">
+            <Link href="/register" className="px-6 py-2.5 bg-theme-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-theme-primary hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all active:scale-95">
               Daftar Gratis
             </Link>
           </div>
@@ -70,19 +66,19 @@ export default function MasterLandingPage() {
           ========================================= */}
       <main className="relative z-10 max-w-7xl mx-auto px-8 pt-40 pb-24 grid lg:grid-cols-2 items-center gap-20">
         <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
-          <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-full mb-8">
-            <Sparkles size={14} className="text-indigo-400" />
-            <span className="text-[10px] font-black text-indigo-300 uppercase tracking-widest">Sahabat Mental &amp; Kesehatan</span>
+          <div className="inline-flex items-center gap-2 bg-theme-primary/10 border border-theme-primary/20 px-4 py-2 rounded-full mb-8">
+            <Sparkles size={14} className="text-theme-primary" />
+            <span className="text-[10px] font-black text-theme-primary uppercase tracking-widest">Sahabat Mental &amp; Kesehatan</span>
           </div>
           <h1 className="text-7xl lg:text-[90px] font-black tracking-tighter leading-[0.85] mb-8">
             LEVEL UP <br /> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-rose-400 to-amber-400">YOUR MIND.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary via-rose-400 to-amber-400">YOUR MIND.</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-md font-medium mb-12 leading-relaxed italic">
             &ldquo;Menghubungkan kamu dengan teknologi AI, komunitas, serta tenaga profesional kesehatan dalam satu ekosistem RPG.&rdquo;
           </p>
           <div className="flex flex-wrap items-center gap-6">
-            <Link href="/register" className="group bg-indigo-600 px-10 py-5 rounded-2xl font-black text-xs shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:scale-105 transition-all flex items-center gap-3">
+            <Link href="/register" className="group bg-theme-primary px-10 py-5 rounded-2xl font-black text-xs shadow-[0_10px_30px_rgba(99,102,241,0.3)] hover:scale-105 transition-all flex items-center gap-3">
               MULAI SEKARANG <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -93,12 +89,12 @@ export default function MasterLandingPage() {
           <div className="bg-white/[0.03] border border-white/10 p-12 rounded-[4rem] backdrop-blur-3xl shadow-2xl relative overflow-hidden">
             <div className="flex justify-between items-center mb-12">
               <div className="bg-rose-500/20 p-5 rounded-[2rem] border border-rose-500/20"><Heart className="text-rose-500" size={32} /></div>
-              <div className="bg-indigo-600 px-6 py-2.5 rounded-2xl text-[12px] font-black">+150 EXP</div>
+              <div className="bg-theme-primary px-6 py-2.5 rounded-2xl text-[12px] font-black">+150 EXP</div>
             </div>
             <h4 className="text-2xl font-black mb-3 uppercase italic tracking-tighter">Self-Care Harian</h4>
             <p className="text-slate-500 text-xs font-bold mb-8 uppercase tracking-widest">Program: Mengelola Kecemasan</p>
             <div className="h-4 bg-white/5 rounded-full overflow-hidden mb-6 border border-white/5">
-              <motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ duration: 2, delay: 1 }} className="h-full bg-gradient-to-r from-indigo-500 via-rose-500 to-amber-400" />
+              <motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ duration: 2, delay: 1 }} className="h-full bg-gradient-to-r from-theme-primary via-rose-500 to-amber-400" />
             </div>
             <div className="flex justify-between text-[10px] font-black text-slate-600 uppercase tracking-widest">
               <span>Level 12 Warrior</span><span>65% Progress</span>
@@ -117,11 +113,11 @@ export default function MasterLandingPage() {
             {/* CSS-animated blob — lebih ringan dari Framer Motion */}
             <div
               style={{ animation: "blob 10s linear infinite" }}
-              className="w-80 h-80 bg-gradient-to-br from-indigo-500 via-rose-500 to-amber-500 blur-2xl opacity-30 absolute will-change-transform"
+              className="w-80 h-80 bg-gradient-to-br from-theme-primary via-rose-500 to-amber-500 blur-2xl opacity-30 absolute will-change-transform"
             />
             
             <div className="relative z-10 bg-white/5 backdrop-blur-3xl border border-white/10 p-12 rounded-[4rem] text-center w-full max-w-sm shadow-2xl">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-8 block">Current Vibe</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-theme-primary mb-8 block">Current Vibe</span>
               {/* Animasi Vektor Cincin Berputar & Ikon */}
               <div className="relative flex justify-center items-center mb-6 h-24">
                 <motion.svg
@@ -146,14 +142,14 @@ export default function MasterLandingPage() {
           <div className="space-y-10">
             <h2 className="text-5xl font-black italic tracking-tighter uppercase leading-none mb-6">
               Mood Tracker <br />
-              <span className="text-slate-600 underline decoration-indigo-500 decoration-4 underline-offset-8">Otomatis.</span>
+              <span className="text-slate-600 underline decoration-theme-primary decoration-4 underline-offset-8">Otomatis.</span>
             </h2>
             <p className="text-slate-400 font-medium leading-relaxed italic">
               &ldquo;MindMate+ menganalisis pola tidur, aktivitas, dan interaksi untuk membangun gambaran emosional yang akurat tanpa membebani Anda.&rdquo;
             </p>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-6 bg-white/5 border border-white/5 rounded-3xl group hover:border-indigo-500/30 transition-all">
-                <Zap size={20} className="text-indigo-400 mb-4" />
+              <div className="p-6 bg-white/5 border border-white/5 rounded-3xl group hover:border-theme-primary/30 transition-all">
+                <Zap size={20} className="text-theme-primary mb-4" />
                 <h5 className="text-[10px] font-black uppercase tracking-widest mb-1 text-slate-500">Sleep Sync</h5>
                 <p className="text-lg font-black italic">8.2 Hours</p>
               </div>
@@ -175,7 +171,7 @@ export default function MasterLandingPage() {
           <div>
             <h2 className="text-5xl font-black italic tracking-tighter uppercase text-white">
               Konseling <br /> Tanpa{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-rose-400">Stigma.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary to-rose-400">Stigma.</span>
             </h2>
           </div>
           <p className="text-slate-400 max-w-sm text-sm font-medium italic">
@@ -196,12 +192,12 @@ export default function MasterLandingPage() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: idx * 0.2 }}
               whileHover={{ y: -10 }}
-              className="bg-white/5 border border-white/10 p-8 rounded-[3rem] hover:border-indigo-500/30 transition-all group relative overflow-hidden"
+              className="bg-white/5 border border-white/10 p-8 rounded-[3rem] hover:border-theme-primary/30 transition-all group relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-bl-[100px] -z-10 group-hover:bg-indigo-500/20 transition-colors" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-theme-primary/10 rounded-bl-[100px] -z-10 group-hover:bg-theme-primary/20 transition-colors" />
               <div className="flex justify-between items-start mb-8">
                 <div className="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-white/10 flex items-center justify-center relative overflow-hidden shadow-xl">
-                  <div className="text-indigo-400 relative z-10 group-hover:scale-110 group-hover:text-white transition-all">
+                  <div className="text-theme-primary relative z-10 group-hover:scale-110 group-hover:text-white transition-all">
                     {doc.icon}
                   </div>
                 </div>
@@ -210,11 +206,11 @@ export default function MasterLandingPage() {
                 </div>
               </div>
               <h3 className="text-xl font-black text-white mb-1 tracking-tight">{doc.name}</h3>
-              <p className="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">{doc.spec}</p>
+              <p className="text-theme-primary text-xs font-bold uppercase tracking-widest mb-4">{doc.spec}</p>
               <div className="flex items-center gap-2 text-slate-500 text-xs font-medium mb-8">
                 <Calendar size={14} /> Pengalaman {doc.exp}
               </div>
-              <button className="w-full py-4 rounded-xl bg-white/5 text-white font-black text-[10px] uppercase hover:bg-indigo-600 transition-all border border-white/5 hover:border-transparent">
+              <button className="w-full py-4 rounded-xl bg-white/5 text-white font-black text-[10px] uppercase hover:bg-theme-primary transition-all border border-white/5 hover:border-transparent">
                 Jadwalkan Sesi
               </button>
             </motion.div>
@@ -223,7 +219,7 @@ export default function MasterLandingPage() {
 
         {/* Secure Vault Banner */}
         <div className="bg-gradient-to-r from-[#0a0c14] to-[#121420] border border-white/5 p-8 rounded-3xl flex flex-col md:flex-row items-center gap-6 justify-between relative overflow-hidden">
-          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-indigo-500/20 blur-[50px] rounded-full" />
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-theme-primary/20 blur-[50px] rounded-full" />
           <div className="flex items-center gap-6 relative z-10">
             <div className="bg-slate-900 p-4 rounded-2xl border border-white/10 shadow-lg">
               <Lock size={24} className="text-emerald-400" />
@@ -253,7 +249,7 @@ export default function MasterLandingPage() {
 
         <div className="grid md:grid-cols-3 gap-6 mb-24">
           {[
-            { name: "SMA Darul Ulum 1 Hub", type: "School Community", members: "1.2K", online: 142, accent: "bg-indigo-500/20 text-indigo-400" },
+            { name: "SMA Darul Ulum 1 Hub", type: "School Community", members: "1.2K", online: 142, accent: "bg-theme-primary/20 text-theme-primary" },
             { name: "Jombang Zen Space", type: "City Hub", members: "850", online: 56, accent: "bg-amber-500/20 text-amber-400" },
             { name: "Pejuang Kampus", type: "Student Group", members: "3.4K", online: 430, accent: "bg-rose-500/20 text-rose-400" },
           ].map((com, idx) => (
@@ -271,7 +267,7 @@ export default function MasterLandingPage() {
               </div>
               <h3 className="text-lg font-black text-white mb-1 uppercase tracking-tight">{com.name}</h3>
               <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-6">{com.type} &bull; {com.members} Members</p>
-              <button className="w-full py-3 rounded-xl bg-white/5 text-white font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition-all border border-white/5">
+              <button className="w-full py-3 rounded-xl bg-white/5 text-white font-black text-[10px] uppercase tracking-widest hover:bg-theme-primary transition-all border border-white/5">
                 Gabung Ruang
               </button>
             </motion.div>
@@ -279,9 +275,9 @@ export default function MasterLandingPage() {
         </div>
 
         {/* B2B Dashboard Block */}
-        <div className="relative p-[1px] rounded-[3rem] bg-gradient-to-b from-indigo-500/30 to-transparent">
+        <div className="relative p-[1px] rounded-[3rem] bg-gradient-to-b from-theme-primary/30 to-transparent">
           <div className="bg-[#0a0c14] border border-white/5 p-10 lg:p-16 rounded-[3rem] overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-theme-primary/10 blur-[100px] rounded-full pointer-events-none" />
             <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-4 py-2 rounded-full">
@@ -290,7 +286,7 @@ export default function MasterLandingPage() {
                 </div>
                 <h2 className="text-4xl lg:text-5xl font-black italic tracking-tighter uppercase text-white leading-[0.9]">
                   Dashboard <br /> Pintar Untuk <br />
-                  <span className="text-indigo-400">Guru BK &amp; HRD.</span>
+                  <span className="text-theme-primary">Guru BK &amp; HRD.</span>
                 </h2>
                 <p className="text-slate-400 text-sm font-medium leading-relaxed">
                   Laporan agregat anonim untuk memantau kesejahteraan mental siswa atau karyawan secara real-time.
@@ -302,14 +298,14 @@ export default function MasterLandingPage() {
                     </li>
                   ))}
                 </ul>
-                <button className="mt-2 px-8 py-4 bg-white text-indigo-600 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all">
+                <button className="mt-2 px-8 py-4 bg-white text-theme-primary rounded-2xl font-black text-[10px] uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all">
                   Jadwalkan Demo B2B
                 </button>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl shadow-2xl">
                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
                   <span className="text-xs font-black uppercase text-white tracking-widest">School Analytics Overview</span>
-                  <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-md font-bold uppercase">Bulan Ini</span>
+                  <span className="text-[10px] bg-theme-primary/20 text-theme-primary px-2 py-1 rounded-md font-bold uppercase">Bulan Ini</span>
                 </div>
                 <div className="space-y-4 mb-6">
                   <div>
@@ -329,12 +325,12 @@ export default function MasterLandingPage() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-indigo-500/10 border border-indigo-500/20 p-4 rounded-xl flex items-center justify-between">
+                <div className="bg-theme-primary/10 border border-theme-primary/20 p-4 rounded-xl flex items-center justify-between">
                   <div>
-                    <p className="text-[10px] font-black uppercase text-indigo-300 tracking-widest mb-1">Tren Stres Global</p>
+                    <p className="text-[10px] font-black uppercase text-theme-primary tracking-widest mb-1">Tren Stres Global</p>
                     <h4 className="text-2xl font-black text-white">-15%</h4>
                   </div>
-                  <div className="bg-indigo-500 text-white p-2 rounded-lg"><TrendingDown size={20} /></div>
+                  <div className="bg-theme-primary text-white p-2 rounded-lg"><TrendingDown size={20} /></div>
                 </div>
               </div>
             </div>
@@ -357,10 +353,10 @@ export default function MasterLandingPage() {
             <p className="text-4xl font-black mb-2 italic text-white">Gratis</p>
             <p className="text-slate-600 text-[10px] font-bold uppercase mb-8">Selamanya</p>
             <ul className="space-y-3 mb-12 flex-1 text-xs text-slate-400">
-              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-indigo-400 flex-shrink-0" /> Mood Tracker Harian</li>
-              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-indigo-400 flex-shrink-0" /> Jurnal Refleksi Dasar</li>
-              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-indigo-400 flex-shrink-0" /> 3 Sesi Mira AI / Bulan</li>
-              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-indigo-400 flex-shrink-0" /> Akses Komunitas Umum</li>
+              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-theme-primary flex-shrink-0" /> Mood Tracker Harian</li>
+              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-theme-primary flex-shrink-0" /> Jurnal Refleksi Dasar</li>
+              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-theme-primary flex-shrink-0" /> 3 Sesi Mira AI / Bulan</li>
+              <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-theme-primary flex-shrink-0" /> Akses Komunitas Umum</li>
             </ul>
             <Link href="/register" className="w-full py-4 text-center rounded-2xl bg-white/5 text-white font-black text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all border border-white/10 block">
               Mulai Gratis
@@ -368,14 +364,14 @@ export default function MasterLandingPage() {
           </div>
 
           {/* WARRIOR — Populer */}
-          <div className="p-10 rounded-[3.5rem] border-2 border-indigo-500 bg-indigo-600/20 scale-105 shadow-[0_0_60px_rgba(99,102,241,0.2)] relative flex flex-col h-full">
+          <div className="p-10 rounded-[3.5rem] border-2 border-theme-primary bg-theme-primary/20 scale-105 shadow-[0_0_60px_rgba(99,102,241,0.2)] relative flex flex-col h-full">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-black text-[9px] font-black px-5 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
               Populer
             </div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-indigo-300 mb-1">Untuk Jiwa Pemberani</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-1">Untuk Jiwa Pemberani</p>
             <h3 className="text-2xl font-black italic uppercase text-white mb-2">WARRIOR</h3>
             <p className="text-4xl font-black mb-2 italic text-white">Rp 79.000</p>
-            <p className="text-indigo-300 text-[10px] font-bold uppercase mb-8">Per Bulan</p>
+            <p className="text-theme-primary text-[10px] font-bold uppercase mb-8">Per Bulan</p>
             <ul className="space-y-3 mb-12 flex-1 text-xs text-slate-300">
               <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-yellow-400 flex-shrink-0" /> Semua fitur Free</li>
               <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-yellow-400 flex-shrink-0" /> Mira AI Chat Unlimited</li>
@@ -383,7 +379,7 @@ export default function MasterLandingPage() {
               <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-yellow-400 flex-shrink-0" /> Mood Analytics Lanjutan</li>
               <li className="flex gap-3 items-center"><CheckCircle2 size={14} className="text-yellow-400 flex-shrink-0" /> Komunitas Premium</li>
             </ul>
-            <Link href="/register" className="w-full py-5 text-center rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all block">
+            <Link href="/register" className="w-full py-5 text-center rounded-2xl bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest hover:shadow-[0_0_30px_rgba(99,102,241,0.4)] transition-all block">
               Mulai 7 Hari Gratis
             </Link>
           </div>
@@ -416,7 +412,7 @@ export default function MasterLandingPage() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-2 rounded-xl">
+              <div className="bg-gradient-to-br from-theme-primary to-theme-primary p-2 rounded-xl">
                 <BrainCircuit size={18} className="text-white" />
               </div>
               <span className="text-lg font-black italic uppercase tracking-tighter text-white">MindMate+</span>
@@ -432,19 +428,19 @@ export default function MasterLandingPage() {
           <div>
             <h4 className="text-white font-black uppercase text-[10px] tracking-widest mb-6">Fitur</h4>
             <div className="flex flex-col gap-3 text-xs text-slate-500">
-              <a href="#fitur" className="hover:text-indigo-400 transition-colors">Mood Tracker</a>
-              <a href="#fitur" className="hover:text-indigo-400 transition-colors">Mira AI Chat</a>
-              <a href="#profesional" className="hover:text-indigo-400 transition-colors">Booking Psikolog</a>
-              <a href="#komunitas" className="hover:text-indigo-400 transition-colors">Komunitas</a>
+              <a href="#fitur" className="hover:text-theme-primary transition-colors">Mood Tracker</a>
+              <a href="#fitur" className="hover:text-theme-primary transition-colors">Mira AI Chat</a>
+              <a href="#profesional" className="hover:text-theme-primary transition-colors">Booking Psikolog</a>
+              <a href="#komunitas" className="hover:text-theme-primary transition-colors">Komunitas</a>
             </div>
           </div>
           <div>
             <h4 className="text-white font-black uppercase text-[10px] tracking-widest mb-6">Legal &amp; Info</h4>
             <div className="flex flex-col gap-3 text-xs text-slate-500">
-              <a href="#" className="hover:text-indigo-400 transition-colors">Syarat &amp; Ketentuan</a>
-              <a href="#" className="hover:text-indigo-400 transition-colors">Kebijakan Privasi</a>
-              <a href="#" className="hover:text-indigo-400 transition-colors">B2B Partnership</a>
-              <a href="#" className="hover:text-indigo-400 transition-colors">Tentang Kami</a>
+              <a href="#" className="hover:text-theme-primary transition-colors">Syarat &amp; Ketentuan</a>
+              <a href="#" className="hover:text-theme-primary transition-colors">Kebijakan Privasi</a>
+              <a href="#" className="hover:text-theme-primary transition-colors">B2B Partnership</a>
+              <a href="#" className="hover:text-theme-primary transition-colors">Tentang Kami</a>
             </div>
           </div>
         </div>
@@ -453,9 +449,9 @@ export default function MasterLandingPage() {
             &copy; 2026 PT MindMate Karya Nusantara &middot; SMA Darul Ulum 1 Unggulan &middot; Jombang
           </p>
           <div className="flex items-center gap-6 text-slate-600">
-            <a href="#" className="hover:text-indigo-400 transition-colors"><Instagram size={18} /></a>
-            <a href="#" className="hover:text-indigo-400 transition-colors"><Linkedin size={18} /></a>
-            <a href="#" className="hover:text-indigo-400 transition-colors"><Mail size={18} /></a>
+            <a href="#" className="hover:text-theme-primary transition-colors"><Instagram size={18} /></a>
+            <a href="#" className="hover:text-theme-primary transition-colors"><Linkedin size={18} /></a>
+            <a href="#" className="hover:text-theme-primary transition-colors"><Mail size={18} /></a>
           </div>
         </div>
       </footer>

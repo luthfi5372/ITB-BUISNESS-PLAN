@@ -28,7 +28,7 @@ export default function MoodPage() {
     <div className="p-6 space-y-6">
       {/* Check-in */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/5 border border-white/10 rounded-3xl p-8">
-        <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Daily Check-in</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-2">Daily Check-in</p>
         <h2 className="text-2xl font-black italic uppercase tracking-tighter mb-6">Gimana Perasaanmu Sekarang?</h2>
         <div className="grid grid-cols-3 gap-4 max-w-sm mb-6">
           {moods.map((m) => (
@@ -43,7 +43,7 @@ export default function MoodPage() {
         {selected && !saved && (
           <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             onClick={() => setSaved(true)}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
+            className="px-8 py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all"
           >
             Simpan Mood Hari Ini +30 XP
           </motion.button>
@@ -57,14 +57,14 @@ export default function MoodPage() {
 
       {/* Weekly Chart */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white/5 border border-white/10 rounded-3xl p-8">
-        <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-2">Tren Minggu Ini</p>
+        <p className="text-[10px] font-black uppercase tracking-widest text-theme-primary mb-2">Tren Minggu Ini</p>
         <h2 className="text-xl font-black italic uppercase tracking-tighter mb-8">Riwayat Mood 7 Hari</h2>
         <div className="flex items-end gap-3 h-32 mb-3">
           {weekData.map((d, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-2">
               <span className="text-[9px] text-slate-600 font-bold">{d.score}</span>
               <motion.div initial={{ height: 0 }} animate={{ height: `${(d.score / 10) * 100}%` }} transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="w-full bg-gradient-to-t from-indigo-600 to-violet-500 rounded-t-lg min-h-[8px]" style={{ height: `${(d.score / 10) * 100}%` }}
+                className="w-full bg-gradient-to-t from-theme-primary to-violet-500 rounded-t-lg min-h-[8px]" style={{ height: `${(d.score / 10) * 100}%` }}
               />
             </div>
           ))}
@@ -79,7 +79,7 @@ export default function MoodPage() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: "Rata-rata Minggu Ini", value: "6.4", icon: <TrendingUp size={16} />, color: "text-indigo-400" },
+          { label: "Rata-rata Minggu Ini", value: "6.4", icon: <TrendingUp size={16} />, color: "text-theme-primary" },
           { label: "Hari Terbaik", value: "9/10", icon: <Smile size={16} />, color: "text-emerald-400" },
           { label: "Streak Check-in", value: "12 Hari", icon: <Zap size={16} />, color: "text-amber-400" },
           { label: "Mood Terpopuler", value: "Baik 😊", icon: <Activity size={16} />, color: "text-rose-400" },

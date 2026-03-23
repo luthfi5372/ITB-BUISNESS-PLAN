@@ -42,7 +42,7 @@ export default function SelfCarePage() {
       description: "Bangun rutinitas tidur yang konsisten untuk meningkatkan kualitas istirahat dan energi harian.",
       duration: "14 Hari",
       icon: Moon,
-      color: "bg-indigo-500",
+      color: "bg-theme-primary",
       activities: [
         "Jadwal tidur tetap",
         "Rutinitas sebelum tidur",
@@ -137,7 +137,7 @@ export default function SelfCarePage() {
     <div className="min-h-screen bg-[#FBFBFE] p-6 lg:p-12">
       <div className="max-w-6xl mx-auto">
         <header className="mb-8">
-          <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-700 mb-4 inline-block">
+          <Link href="/dashboard" className="text-theme-primary hover:text-theme-primary mb-4 inline-block">
             ← Kembali ke Dashboard
           </Link>
           <h1 className="text-4xl font-black tracking-tight">Program Self-Care</h1>
@@ -168,7 +168,7 @@ export default function SelfCarePage() {
                 </div>
                 <div className="mt-6 flex justify-between items-center">
                   <span className="text-sm text-slate-500">{program.activities.length} aktivitas</span>
-                  <button className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-indigo-700 transition">
+                  <button className="bg-theme-primary text-white px-6 py-2 rounded-xl font-bold hover:bg-theme-primary transition">
                     Mulai Program
                   </button>
                 </div>
@@ -184,7 +184,7 @@ export default function SelfCarePage() {
             <div className="flex items-center justify-between mb-8">
               <button
                 onClick={() => setSelectedProgram(null)}
-                className="text-indigo-600 hover:text-indigo-700 font-bold"
+                className="text-theme-primary hover:text-theme-primary font-bold"
               >
                 ← Kembali ke Program
               </button>
@@ -211,7 +211,7 @@ export default function SelfCarePage() {
             </div>
 
             <div className="mt-8 text-center">
-              <button className="bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-indigo-700 transition text-lg">
+              <button className="bg-theme-primary text-white px-8 py-4 rounded-xl font-bold hover:bg-theme-primary transition text-lg">
                 <Play size={20} className="inline mr-2" />
                 Mulai Program Hari Ini
               </button>

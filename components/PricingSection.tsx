@@ -32,14 +32,14 @@ const PLANS = [
     tagline: "Untuk Jiwa Pemberani",
     price: "Rp 79.000",
     period: "/ bulan",
-    border: "border-indigo-500/60",
+    border: "border-theme-primary/60",
     glow: "shadow-[0_0_40px_rgba(99,102,241,0.25)]",
     badge: "POPULER",
-    badgeColor: "bg-indigo-600",
-    icon: <Star size={20} className="text-indigo-400" />,
-    gradient: "from-indigo-950/60 to-slate-900/60",
+    badgeColor: "bg-theme-primary",
+    icon: <Star size={20} className="text-theme-primary" />,
+    gradient: "from-theme-primary/60 to-slate-900/60",
     cta: "Mulai 7 Hari Gratis",
-    ctaClass: "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30",
+    ctaClass: "bg-theme-primary hover:bg-theme-primary text-white shadow-lg shadow-theme-primary/30",
     features: [
       "Semua fitur Free",
       "Mira AI Chat Unlimited",
@@ -89,7 +89,7 @@ export default function PricingSection() {
         </div>
         <h2 className="text-5xl lg:text-6xl font-black italic tracking-tighter uppercase leading-none mb-4">
           Pilih Level<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-rose-400 to-amber-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-theme-primary via-rose-400 to-amber-400">
             Perjalananmu.
           </span>
         </h2>
@@ -133,7 +133,7 @@ export default function PricingSection() {
             <ul className="space-y-3 flex-1 mb-8">
               {plan.features.map((f) => (
                 <li key={f} className="flex items-start gap-2.5">
-                  <Check size={14} className="text-indigo-400 mt-0.5 flex-shrink-0" />
+                  <Check size={14} className="text-theme-primary mt-0.5 flex-shrink-0" />
                   <span className="text-xs text-slate-300 font-medium">{f}</span>
                 </li>
               ))}

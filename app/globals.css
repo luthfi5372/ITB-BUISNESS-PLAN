@@ -137,6 +137,25 @@
   animation: shimmer 2s infinite;
 }
 
+@layer base {
+  :root {
+    /* Default: Sage Green */
+    --theme-primary: 134 167 137; 
+  }
+
+  .theme-blue {
+    --theme-primary: 96 165 250; /* Blue Sky */
+  }
+
+  .theme-lavender {
+    --theme-primary: 167 139 250; /* Lavender */
+  }
+
+  .theme-peach {
+    --theme-primary: 251 146 60; /* Warm Peach */
+  }
+}
+
 /* ===================== VARIABLES ===================== */
 :root {
   --bg: 0 0% 100%;

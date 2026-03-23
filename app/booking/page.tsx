@@ -77,7 +77,7 @@ export default function BookingPage() {
     <div className="min-h-screen bg-[#FBFBFE] p-6 lg:p-12">
       <div className="max-w-4xl mx-auto">
         <header className="mb-8">
-          <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-700 mb-4 inline-block">
+          <Link href="/dashboard" className="text-theme-primary hover:text-theme-primary mb-4 inline-block">
             ← Kembali ke Dashboard
           </Link>
           <h1 className="text-4xl font-black tracking-tight">Booking Konsultasi</h1>
@@ -91,7 +91,7 @@ export default function BookingPage() {
               <h2 className="text-2xl font-bold">Buat Janji Baru</h2>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="bg-indigo-600 text-white px-4 py-2 rounded-xl font-bold hover:bg-indigo-700 transition"
+                className="bg-theme-primary text-white px-4 py-2 rounded-xl font-bold hover:bg-theme-primary transition"
               >
                 {showForm ? "Batal" : "Booking Baru"}
               </button>
@@ -110,7 +110,7 @@ export default function BookingPage() {
                   <select
                     value={formData.doctorName}
                     onChange={(e) => setFormData({ ...formData, doctorName: e.target.value })}
-                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                     required
                   >
                     <option value="">Pilih dokter...</option>
@@ -127,7 +127,7 @@ export default function BookingPage() {
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                       required
                     />
                   </div>
@@ -137,7 +137,7 @@ export default function BookingPage() {
                       type="time"
                       value={formData.time}
                       onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                      className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-theme-primary"
                       required
                     />
                   </div>
@@ -146,7 +146,7 @@ export default function BookingPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition disabled:opacity-50"
+                  className="w-full bg-theme-primary text-white py-3 rounded-xl font-bold hover:bg-theme-primary transition disabled:opacity-50"
                 >
                   {loading ? "Memproses..." : "Konfirmasi Booking"}
                 </button>

@@ -103,14 +103,14 @@ export default function MiraChatQuest() {
             <ArrowLeft size={20} />
           </Link>
           <div className="relative">
-            <div className="w-14 h-14 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.4)]">
+            <div className="w-14 h-14 bg-gradient-to-tr from-theme-primary to-purple-500 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.4)]">
               <BrainCircuit size={28} className="text-white" />
             </div>
             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-4 border-slate-950 rounded-full animate-pulse" />
           </div>
           <div>
             <h2 className="font-black tracking-tight text-lg italic">MIRA AI</h2>
-            <div className="flex items-center gap-2 text-[10px] font-black text-indigo-400 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-[10px] font-black text-theme-primary uppercase tracking-widest">
               <Sparkles size={12} /> Syncing Intelligence
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function MiraChatQuest() {
           >
             <div className={`max-w-[80%] p-6 rounded-[2rem] shadow-xl ${
               msg.role === "user" 
-              ? "bg-indigo-600 text-white rounded-br-none" 
+              ? "bg-theme-primary text-white rounded-br-none" 
               : "bg-white/5 border border-white/10 text-slate-200 rounded-bl-none backdrop-blur-sm"
             }`}>
               <p className="text-sm font-medium leading-relaxed">{msg.text}</p>
@@ -186,7 +186,7 @@ export default function MiraChatQuest() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleSend}
-            className="bg-indigo-600 p-5 rounded-[2rem] text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all"
+            className="bg-theme-primary p-5 rounded-[2rem] text-white shadow-lg shadow-theme-primary/20 hover:bg-theme-primary transition-all"
           >
             <Send size={24} />
           </motion.button>

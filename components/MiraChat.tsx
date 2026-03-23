@@ -81,14 +81,14 @@ export default function MiraChat() {
         onClick={() => setIsOpen((v) => !v)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 shadow-[0_0_30px_rgba(99,102,241,0.5)] flex items-center justify-center border border-indigo-400/30"
+        className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-theme-primary to-violet-600 shadow-[0_0_30px_rgba(99,102,241,0.5)] flex items-center justify-center border border-theme-primary/30"
         aria-label="Buka Chat Mira"
       >
         <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
           {isOpen ? <X size={22} className="text-white" /> : <BrainCircuit size={22} className="text-white" />}
         </motion.div>
         {/* Ping ring */}
-        <span className="absolute inset-0 rounded-full border-2 border-indigo-400/40 animate-ping opacity-60" />
+        <span className="absolute inset-0 rounded-full border-2 border-theme-primary/40 animate-ping opacity-60" />
       </motion.button>
 
       {/* CHAT PANEL */}
@@ -103,12 +103,12 @@ export default function MiraChat() {
           >
             {/* HEADER */}
             <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-theme-primary to-violet-600 flex items-center justify-center shadow-lg shadow-theme-primary/30">
                 <Sparkles size={16} className="text-white" />
               </div>
               <div>
                 <p className="text-[11px] font-black uppercase tracking-widest text-white">Mira AI</p>
-                <p className="text-[9px] text-indigo-400 font-bold uppercase tracking-widest">● Online</p>
+                <p className="text-[9px] text-theme-primary font-bold uppercase tracking-widest">● Online</p>
               </div>
             </div>
 
@@ -124,7 +124,7 @@ export default function MiraChat() {
                   <div
                     className={`max-w-[80%] px-4 py-3 rounded-2xl text-xs font-medium leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-indigo-600 text-white rounded-tr-sm"
+                        ? "bg-theme-primary text-white rounded-tr-sm"
                         : "bg-white/5 border border-white/8 text-slate-200 rounded-tl-sm"
                     }`}
                   >
@@ -148,7 +148,7 @@ export default function MiraChat() {
                           key={i}
                           animate={{ y: [0, -5, 0] }}
                           transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
-                          className="w-1.5 h-1.5 rounded-full bg-indigo-400 block"
+                          className="w-1.5 h-1.5 rounded-full bg-theme-primary block"
                         />
                       ))}
                     </div>
@@ -165,12 +165,12 @@ export default function MiraChat() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Ceritakan perasaanmu..."
-                className="flex-1 bg-white/5 border border-white/8 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                className="flex-1 bg-white/5 border border-white/8 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none focus:border-theme-primary/50 transition-colors"
               />
               <button
                 onClick={sendMessage}
                 disabled={!input.trim()}
-                className="w-10 h-10 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-30 flex items-center justify-center transition-all active:scale-95"
+                className="w-10 h-10 rounded-xl bg-theme-primary hover:bg-theme-primary disabled:opacity-30 flex items-center justify-center transition-all active:scale-95"
               >
                 <Send size={14} className="text-white" />
               </button>

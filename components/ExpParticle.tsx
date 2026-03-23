@@ -34,7 +34,7 @@ export default function ExpParticle({ id, exp, x, y, onComplete }: ExpParticlePr
         ease: "easeOut"
       }}
     >
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-lg border border-white/20">
+      <div className="bg-gradient-to-r from-theme-primary to-purple-500 text-white px-3 py-1 rounded-full text-xs font-black shadow-lg border border-white/20">
         +{exp} EXP
       </div>
     </motion.div>
