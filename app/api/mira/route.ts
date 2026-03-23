@@ -24,7 +24,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const reply = await generateReply(message, context);
+    const userLevel = user ? user.level : 1;
+    const userExp = user ? user.exp : 0;
+    const reply = await generateReply(message, context, userLevel, userExp);
 
     // Kalau user login, tambahkan EXP
     if (user) {
