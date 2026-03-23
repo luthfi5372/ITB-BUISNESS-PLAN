@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "../components/AuthProvider";
 import EmergencyButton from "../components/EmergencyButton";
+import { LevelUpProvider } from "../components/LevelUpProvider";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -25,8 +26,10 @@ export default function RootLayout({
     <html lang="id">
       <body className={`${plusJakarta.variable} font-jakarta bg-[#050508] cyber-cursor antialiased`}>
         <AuthProvider>
-          {children}
-          <EmergencyButton />
+          <LevelUpProvider>
+            {children}
+            <EmergencyButton />
+          </LevelUpProvider>
         </AuthProvider>
       </body>
     </html>
