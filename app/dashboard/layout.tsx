@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import {
   BrainCircuit, Activity, BookOpen, Stethoscope,
@@ -10,7 +10,6 @@ import {
   LayoutDashboard, Menu, Bell, MessageCircle
 } from "lucide-react";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import { useEffect } from "react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard size={16} /> },
@@ -26,10 +25,38 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session } = useSession();
+  
+  // 1. Siapkan state untuk menampung data asli dari database
+  const [userStats, setUserStats] = useState({
+    level: 1,
+    exp: 0,
+    title: "Newbie",
+  });
+
+  // 2. Ambil data asli saat layout dimuat
+  useEffect(() => {
+    if (session?.user) {
+      fetch("/api/user/stats", { cache: "no-store" })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.error) {
+            setUserStats({
+              level: data.level || 1,
+              exp: data.exp || 0,
+              title: data.title || "Newbie",
+            });
+          }
+        })
+        .catch(err => console.error("Gagal ambil stats sidebar:", err));
+    }
+  }, [session]);
+
+  // Hitung persentase EXP dinamis (Misal: per level butuh 1000 * level EXP)
+  const nextLevelXp = userStats.level * 1000;
+  const xpPercentage = Math.min((userStats.exp / nextLevelXp) * 100, 100);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex overflow-hidden">
-
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
@@ -51,24 +78,35 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </Link>
         </div>
 
-        {/* User Card */}
+        {/* User Card (Data Asli) */}
         <div className="group p-4 m-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-theme-primary to-rose-500 rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all duration-300">
               {session?.user?.name?.[0]?.toUpperCase() || 'P'}
             </div>
             <div>
-              <p className="text-sm font-black text-white group-hover:text-theme-primary transition-colors">{session?.user?.name || "Player"}</p>
-              <p className="text-[10px] text-theme-primary font-bold uppercase tracking-widest group-hover:text-theme-primary transition-colors">Level 12 Warrior</p>
+              {/* Tampilkan nama asli */}
+              <p className="text-sm font-black text-white group-hover:text-theme-primary transition-colors">
+                {session?.user?.name || "Player"}
+              </p>
+              {/* Tampilkan level & gelar asli */}
+              <p className="text-[10px] text-theme-primary font-bold uppercase tracking-widest group-hover:text-theme-primary transition-colors">
+                Level {userStats.level} {userStats.title}
+              </p>
             </div>
           </div>
           <div className="mt-3">
             <div className="flex justify-between text-[9px] font-bold text-slate-500 uppercase mb-1">
-              <span>XP Progress</span><span className="group-hover:text-slate-300 transition-colors">2840 / 3500</span>
+              <span>XP Progress</span>
+              <span className="group-hover:text-slate-300 transition-colors">
+                {userStats.exp.toLocaleString("id-ID")} / {nextLevelXp.toLocaleString("id-ID")}
+              </span>
             </div>
             <div className="h-1.5 bg-white/5 rounded-full overflow-hidden relative">
-              <div className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-theme-primary to-violet-500 rounded-full transition-all duration-1000 ease-out" style={{ width: "81%" }} />
-              <div className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+              <div 
+                className="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-theme-primary to-violet-500 rounded-full transition-all duration-1000 ease-out" 
+                style={{ width: `${xpPercentage}%` }} 
+              />
             </div>
           </div>
         </div>
@@ -124,7 +162,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <h1 className="text-base font-black italic uppercase tracking-tighter text-white">
                 {navLinks.find(l => l.href === pathname)?.label ?? "Dashboard"}
               </h1>
-              <p className="text-[10px] text-slate-500 font-medium">MindMate+ &bull; Level 12 Warrior</p>
+              {/* Topbar subtitle dinamis */}
+              <p className="text-[10px] text-slate-500 font-medium">MindMate+ &bull; Level {userStats.level} {userStats.title}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
