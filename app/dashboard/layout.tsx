@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import {
   BrainCircuit, Activity, BookOpen, Stethoscope,
   Users, Trophy, Settings, LogOut,
@@ -24,6 +25,7 @@ const navLinks = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex overflow-hidden">
@@ -53,10 +55,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="group p-4 m-4 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-theme-primary to-rose-500 rounded-xl flex items-center justify-center font-black text-sm group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all duration-300">
-              L
+              {session?.user?.name?.[0]?.toUpperCase() || 'P'}
             </div>
             <div>
-              <p className="text-sm font-black text-white group-hover:text-theme-primary transition-colors">Luthfi</p>
+              <p className="text-sm font-black text-white group-hover:text-theme-primary transition-colors">{session?.user?.name || "Player"}</p>
               <p className="text-[10px] text-theme-primary font-bold uppercase tracking-widest group-hover:text-theme-primary transition-colors">Level 12 Warrior</p>
             </div>
           </div>
@@ -136,7 +138,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full" />
             </button>
             <div className="w-8 h-8 bg-gradient-to-br from-theme-primary to-rose-500 rounded-xl flex items-center justify-center font-black text-xs">
-              L
+              {session?.user?.name?.[0]?.toUpperCase() || 'P'}
             </div>
           </div>
         </div>
