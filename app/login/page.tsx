@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { BrainCircuit, Mail, Lock, ArrowRight, Eye, EyeOff, AlertCircle } from "lucide-react";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function LoginPage() {
   const [showPass, setShowPass] = useState(false);
@@ -45,6 +46,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex items-center justify-center px-4 relative overflow-hidden">
+      {loading && <LoadingScreen />}
       {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-theme-primary/10 rounded-full blur-[140px]" />

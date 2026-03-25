@@ -28,9 +28,6 @@ export async function POST(req: Request) {
         name,
         email,
         password: hashedPassword,
-        level: 1,
-        exp: 0,
-        title: "Newbie",
       },
     });
 

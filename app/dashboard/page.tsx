@@ -50,7 +50,7 @@ export default function DashboardPage() {
     // Ambil data stats asli dari database bila login
     if (session?.user) {
        setUserData(prev => ({ ...prev, name: session.user?.name || "Player" }));
-       fetch("/api/user/stats")
+       fetch("/api/user/stats", { cache: "no-store" })
          .then(res => res.json())
          .then(data => {
             if (!data.error) {
