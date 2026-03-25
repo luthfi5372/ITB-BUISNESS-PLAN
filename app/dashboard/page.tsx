@@ -27,6 +27,7 @@ const quests = [
 export default function DashboardPage() {
   const { data: session } = useSession();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [moodHistory, setMoodHistory] = useState<Record<number, number>>({});
   const [showTutorial, setShowTutorial] = useState(false);
   const [userData, setUserData] = useState({
     name: "Tamu",
@@ -63,6 +64,15 @@ export default function DashboardPage() {
                 points: data.points 
               }));
             }
+         });
+
+       // Fecth Mood History
+       fetch("/api/user/mood-history", { cache: "no-store" })
+         .then((res) => res.json())
+         .then((data) => {
+           if (!data.error && data.data) {
+             setMoodHistory(data.data);
+           }
          });
     }
   }, [session]);
@@ -125,9 +135,9 @@ export default function DashboardPage() {
           <div className="mt-6 pt-5 border-t border-white/5">
             <p className="text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3">7 Hari Terakhir</p>
             <div className="flex items-end gap-1.5 h-10">
-              {[6, 4, 7, 5, 8, 6, 9].map((v, i) => (
-                <div key={i} className="flex-1 bg-theme-primary/20 rounded-sm relative overflow-hidden h-full">
-                  <div className="absolute bottom-0 left-0 right-0 bg-theme-primary/60 rounded-sm" style={{ height: `${(v / 10) * 100}%` }} />
+              {[0, 1, 2, 3, 4, 5, 6].map((dayIdx) => (
+                <div key={dayIdx} className="flex-1 bg-theme-primary/20 rounded-sm relative overflow-hidden h-full">
+                  <div className="absolute bottom-0 left-0 right-0 bg-theme-primary/60 rounded-sm" style={{ height: `${((moodHistory[dayIdx] || 0) / 5) * 100}%` }} />
                 </div>
               ))}
             </div>
