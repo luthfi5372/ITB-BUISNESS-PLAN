@@ -40,11 +40,17 @@ export default function RegisterPage() {
 
       // Jika sukses daftar, langsung login otomatis
       if (res.ok) {
-        await signIn("credentials", {
+        const loginRes = await signIn("credentials", {
           email: formData.email,
           password: formData.password,
-          callbackUrl: "/dashboard",
+          redirect: false, // Handle redirect manual biar aman
         });
+
+        if (loginRes?.ok) {
+          router.push("/dashboard"); // 🚀 Lempar ke dashboard
+        } else {
+          throw new Error(loginRes?.error || "Gagal login otomatis, silakan login manual");
+        }
       }
     } catch (err: any) {
       setErrorMsg(err.message);

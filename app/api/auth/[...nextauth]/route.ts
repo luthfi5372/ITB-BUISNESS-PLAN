@@ -60,6 +60,10 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Selalu arahkan ke dashboard setelah login sukses
+      return baseUrl + "/dashboard";
+    },
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
