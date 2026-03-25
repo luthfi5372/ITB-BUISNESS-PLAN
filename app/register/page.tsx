@@ -39,17 +39,13 @@ export default function RegisterPage() {
       }
 
       // Jika sukses daftar, langsung login otomatis
-      const signInRes = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
-
-      if (signInRes?.error) {
-        throw new Error(signInRes.error);
+      if (res.ok) {
+        await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          callbackUrl: "/dashboard",
+        });
       }
-
-      router.push("/dashboard");
     } catch (err: any) {
       setErrorMsg(err.message);
     } finally {
