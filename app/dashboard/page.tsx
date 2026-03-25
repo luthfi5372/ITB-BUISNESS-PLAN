@@ -27,6 +27,7 @@ const quests = [
 export default function DashboardPage() {
   const { data: session } = useSession();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [isSavingMood, setIsSavingMood] = useState(false);
   const [moodHistory, setMoodHistory] = useState<Record<number, number>>({});
   const [showTutorial, setShowTutorial] = useState(false);
   const [userData, setUserData] = useState({
@@ -84,6 +85,28 @@ export default function DashboardPage() {
     { label: "Level Saat Ini", value: userData.level.toString(), unit: userData.title, color: "from-rose-500 to-pink-500" },
   ];
 
+  const handleSaveMood = async () => {
+    if (!selectedMood) return;
+    setIsSavingMood(true); // Nyalakan animasi tombol
+
+    try {
+      const res = await fetch("/api/user/mood", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ moodValue: selectedMood }),
+      });
+
+      if (res.ok) {
+        // Berhasil! Refresh halaman agar Grafik dan EXP langsung naik!
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Gagal menyimpan mood", error);
+    } finally {
+      setIsSavingMood(false);
+    }
+  };
+
   return (
     <div className="p-6 space-y-6">
       {showTutorial && <TutorialGame email={session?.user?.email || ""} onComplete={() => setShowTutorial(false)} />}
@@ -127,10 +150,19 @@ export default function DashboardPage() {
               </button>
             ))}
           </div>
-          {selectedMood
-            ? <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full py-3 bg-theme-primary hover:bg-theme-primary text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all">Simpan Mood +30 XP</motion.button>
-            : <p className="text-center text-[10px] text-slate-600 italic">Pilih mood untuk mulai harimu</p>
-          }
+          {selectedMood ? (
+            <motion.button 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              onClick={handleSaveMood}
+              disabled={isSavingMood}
+              className="w-full py-3 bg-theme-primary hover:bg-theme-primary/80 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all disabled:opacity-50"
+            >
+              {isSavingMood ? "Menyimpan ke Database..." : "Simpan Mood +30 XP"}
+            </motion.button>
+          ) : (
+            <p className="text-center text-[10px] text-slate-600 italic">Pilih mood untuk mulai harimu</p>
+          )}
 
           <div className="mt-6 pt-5 border-t border-white/5">
             <p className="text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3">7 Hari Terakhir</p>
