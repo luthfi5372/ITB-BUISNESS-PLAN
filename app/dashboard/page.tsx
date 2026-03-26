@@ -10,6 +10,8 @@ import {
   Stethoscope, BrainCircuit
 } from "lucide-react";
 import TutorialGame from "@/components/TutorialGame";
+import CountUp from "react-countup";
+import LevelUpModal from "@/components/LevelUpModal";
 
 const moods = [
   { emoji: <Frown size={22} />, label: "Buruk", color: "text-rose-400", bg: "bg-rose-500/20", value: 1 },
@@ -26,6 +28,8 @@ export default function DashboardPage() {
   const [moodHistory, setMoodHistory] = useState<Record<number, number>>({});
   const [leaderboard, setLeaderboard] = useState<{name: string, exp: number}[]>([]);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [levelUpData, setLevelUpData] = useState({ level: 1, title: 'Newbie' });
   const [questList, setQuestList] = useState([
     { id: 1, title: "Jurnal Harian", desc: "Tulis 1 hal yang kamu syukuri hari ini", xp: 50, done: false },
     { id: 2, title: "Napas Dalam 5 Menit", desc: "Latihan pernapasan mindful", xp: 30, done: false },
@@ -57,7 +61,22 @@ export default function DashboardPage() {
         body: JSON.stringify({ xpReward }),
       });
       if (res.ok) {
-        window.location.reload(); // Refresh data EXP & Leaderboard
+        const data = await res.json();
+        // Cek jika naik level
+        if (data.level > userData.level) {
+          setLevelUpData({ level: data.level, title: data.title });
+          setShowLevelUp(true);
+        }
+        
+        // Update stats tanpa reload
+        setUserData(prev => ({ ...prev, exp: data.exp, level: data.level, title: data.title }));
+        
+        // Refresh leaderboard
+        fetch("/api/leaderboard", { cache: "no-store" })
+          .then(res => res.json())
+          .then(data => {
+            if (data.data) setLeaderboard(data.data);
+          });
       }
     } catch (error) {
       console.error("Gagal menyelesaikan quest", error);
@@ -111,10 +130,10 @@ export default function DashboardPage() {
   }, [session]);
 
   const dynamicStats = [
-    { label: "Hari Berturut", value: userData.streak.toString(), unit: "hari 🔥", color: "from-amber-500 to-orange-500" },
-    { label: "Total XP", value: userData.exp.toLocaleString("id-ID"), unit: "poin", color: "from-theme-primary to-violet-500" },
-    { label: "Mindfulness", value: userData.points.toString(), unit: "poin", color: "from-emerald-500 to-teal-500" },
-    { label: "Level Saat Ini", value: userData.level.toString(), unit: userData.title, color: "from-rose-500 to-pink-500" },
+    { label: "Hari Berturut", value: <CountUp end={userData.streak} duration={2} />, unit: "hari 🔥", color: "from-amber-500 to-orange-500" },
+    { label: "Total XP", value: <CountUp end={userData.exp} duration={2.5} separator="." />, unit: "poin", color: "from-theme-primary to-violet-500" },
+    { label: "Mindfulness", value: <CountUp end={userData.points} duration={2} />, unit: "poin", color: "from-emerald-500 to-teal-500" },
+    { label: "Level Saat Ini", value: userData.level, unit: userData.title, color: "from-rose-500 to-pink-500" },
   ];
 
   const handleSaveMood = async () => {
@@ -129,8 +148,24 @@ export default function DashboardPage() {
       });
 
       if (res.ok) {
-        // Berhasil! Refresh halaman agar Grafik dan EXP langsung naik!
-        window.location.reload();
+        const data = await res.json();
+        // Cek jika naik level
+        if (data.level > userData.level) {
+          setLevelUpData({ level: data.level, title: data.title });
+          setShowLevelUp(true);
+        }
+
+        // Update stats
+        setUserData(prev => ({ ...prev, exp: data.exp, level: data.level, title: data.title }));
+        
+        // Refresh grafik & leaderboard
+        fetch("/api/user/mood-history", { cache: "no-store" })
+          .then((r) => r.json())
+          .then((d) => { if (!d.error && d.data) setMoodHistory(d.data); });
+
+        fetch("/api/leaderboard", { cache: "no-store" })
+          .then(r => r.json())
+          .then(d => { if (d.data) setLeaderboard(d.data); });
       }
     } catch (error) {
       console.error("Gagal menyimpan mood", error);
@@ -142,6 +177,7 @@ export default function DashboardPage() {
   return (
     <div className="p-6 space-y-6">
       {showTutorial && <TutorialGame email={session?.user?.email || ""} onComplete={() => setShowTutorial(false)} />}
+      <LevelUpModal show={showLevelUp} level={levelUpData.level} title={levelUpData.title} onClose={() => setShowLevelUp(false)} />
 
       {/* Greeting */}
       <div>
@@ -172,14 +208,17 @@ export default function DashboardPage() {
           <h2 className="text-lg font-black italic uppercase tracking-tighter text-white mb-6">Mood Hari Ini?</h2>
           <div className="grid grid-cols-3 gap-3 mb-5">
             {moods.map((mood) => (
-              <button key={mood.value} onClick={() => setSelectedMood(mood.value)}
+              <motion.button 
+                key={mood.value} 
+                onClick={() => setSelectedMood(mood.value)}
+                whileTap={{ scale: 0.9, rotate: -10 }}
                 className={`flex flex-col items-center gap-2 p-4 rounded-2xl border transition-all ${
-                  selectedMood === mood.value ? `${mood.bg} border-white/20 scale-105` : "bg-white/5 border-white/5 hover:bg-white/10"
+                  selectedMood === mood.value ? `${mood.bg} border-white/20 scale-105 shadow-[0_0_20px_rgba(255,255,255,0.05)]` : "bg-white/5 border-white/5 hover:bg-white/10"
                 }`}
               >
                 <span className={selectedMood === mood.value ? mood.color : "text-slate-500"}>{mood.emoji}</span>
                 <span className="text-[9px] font-black uppercase text-slate-400">{mood.label}</span>
-              </button>
+              </motion.button>
             ))}
           </div>
           {selectedMood ? (
