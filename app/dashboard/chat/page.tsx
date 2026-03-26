@@ -18,6 +18,19 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handleTembakPesan = (e: any) => {
+    e.preventDefault();
+    if (!input.trim()) return; // Batal kalau kosong
+
+    console.log("🔥 BOOM! Pesan ditembakkan:", input);
+    
+    // Tembak pesan secara paksa ke API
+    append({ role: 'user', content: input });
+    
+    // Kosongkan kotak ketik
+    setInput('');
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-80px)] max-w-4xl mx-auto p-4 lg:p-6">
       {/* Header Chat */}
@@ -76,34 +89,25 @@ export default function ChatPage() {
         </div>
       )}
 
-      {/* Form Ketik Pesan */}
-      <form 
-        onSubmit={(e) => {
-          e.preventDefault(); // Cegah halaman reload
-          if (!input.trim()) return; // Kalau kosong, batalkan
-          
-          // 1. Tembak pesan paksa ke layar & server
-          append({ role: 'user', content: input });
-          
-          // 2. Kosongkan kotak ketik secara manual
-          setInput('');
-        }} 
-        className="relative shrink-0"
-      >
+      {/* KITA GANTI FORM JADI DIV BIASA */}
+      <div className="relative shrink-0">
         <input
           value={input}
           onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleTembakPesan(e);
+          }}
           placeholder="Ketik curhatanmu di sini..."
           className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 transition-all disabled:opacity-50"
         />
         <button 
-          type="submit" 
+          onClick={handleTembakPesan} 
           disabled={!(input || '').trim()}
           className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary"
         >
           <Send size={16} />
         </button>
-      </form>
+      </div>
     </div>
   );
 }
