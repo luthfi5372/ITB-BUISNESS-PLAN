@@ -29,6 +29,7 @@ export default function DashboardPage() {
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [isSavingMood, setIsSavingMood] = useState(false);
   const [moodHistory, setMoodHistory] = useState<Record<number, number>>({});
+  const [leaderboard, setLeaderboard] = useState<{name: string, exp: number}[]>([]);
   const [showTutorial, setShowTutorial] = useState(false);
   const [userData, setUserData] = useState({
     name: "Tamu",
@@ -74,6 +75,13 @@ export default function DashboardPage() {
            if (!data.error && data.data) {
              setMoodHistory(data.data);
            }
+         });
+
+       // Ambil data Papan Peringkat Asli
+       fetch("/api/leaderboard", { cache: "no-store" })
+         .then(res => res.json())
+         .then(data => {
+           if (data.data) setLeaderboard(data.data);
          });
     }
   }, [session]);
@@ -290,17 +298,17 @@ export default function DashboardPage() {
           </div>
           <div className="pt-4 border-t border-white/5">
             <p className="text-[9px] font-black uppercase tracking-widest text-slate-600 mb-3">Leaderboard Sekolah</p>
-            {[
-              {rank:1, name: userData.exp > 2650 ? userData.name : "Rizky A.", xp: Math.max(userData.exp, 2650).toLocaleString("id-ID"), me: userData.exp > 2650},
-              {rank:2, name: userData.exp <= 2650 && userData.exp > 1000 ? userData.name : "Putri N.", xp: userData.exp <= 2650 && userData.exp > 1000 ? userData.exp.toLocaleString("id-ID") : "2.410", me: userData.exp <= 2650 && userData.exp > 1000},
-              {rank:3, name: userData.exp <= 1000 ? userData.name : "Alex S.", xp: userData.exp <= 1000 ? userData.exp.toLocaleString("id-ID") : "1.890", me: userData.exp <= 1000}
-            ].map(p=>(
-              <div key={p.rank} className={`flex items-center gap-3 py-1.5 ${p.me?"text-theme-primary":"text-slate-500"}`}>
-                <span className="text-[10px] font-black w-4">#{p.rank}</span>
-                <span className="flex-1 text-[11px] font-black">{p.name}</span>
-                <span className="text-[10px]">{p.xp} XP</span>
-              </div>
-            ))}
+            {leaderboard.length > 0 ? (
+              leaderboard.map((user, index) => (
+                <div key={index} className={`flex items-center gap-3 py-1.5 ${userData.name === user.name ? "text-theme-primary" : "text-slate-500"}`}>
+                  <span className="text-[10px] font-black w-4">#{index + 1}</span>
+                  <span className="flex-1 text-[11px] font-black">{user.name || "Player"}</span>
+                  <span className="text-[10px]">{user.exp.toLocaleString("id-ID")} XP</span>
+                </div>
+              ))
+            ) : (
+              <p className="text-[10px] text-slate-500 italic mt-2">Belum ada data pemain...</p>
+            )}
           </div>
         </motion.div>
       </div>
