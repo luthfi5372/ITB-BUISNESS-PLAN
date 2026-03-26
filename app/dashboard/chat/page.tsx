@@ -5,7 +5,7 @@ import { BrainCircuit, Send, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 export default function ChatPage() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
+  const { messages, input, handleInputChange, setInput, append, isLoading, error } = useChat({
     api: '/api/chat',
     onError: (err) => {
       console.error("ERROR DARI AI:", err);
@@ -79,9 +79,14 @@ export default function ChatPage() {
       {/* Form Ketik Pesan */}
       <form 
         onSubmit={(e) => {
-          e.preventDefault();
-          console.log("🚨 TOMBOL DITEKAN! Pesan:", input);
-          handleSubmit(e);
+          e.preventDefault(); // Cegah halaman reload
+          if (!input.trim()) return; // Kalau kosong, batalkan
+          
+          // 1. Tembak pesan paksa ke layar & server
+          append({ role: 'user', content: input });
+          
+          // 2. Kosongkan kotak ketik secara manual
+          setInput('');
         }} 
         className="relative shrink-0"
       >
