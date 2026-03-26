@@ -5,7 +5,12 @@ import { BrainCircuit, Send, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 export default function ChatPage() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
+    api: '/api/chat',
+    onError: (err) => {
+      console.error("ERROR DARI AI:", err);
+    }
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Otomatis scroll ke pesan terbaru
@@ -72,7 +77,14 @@ export default function ChatPage() {
       )}
 
       {/* Form Ketik Pesan */}
-      <form onSubmit={handleSubmit} className="relative shrink-0">
+      <form 
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("🚨 TOMBOL DITEKAN! Pesan:", input);
+          handleSubmit(e);
+        }} 
+        className="relative shrink-0"
+      >
         <input
           value={input}
           onChange={handleInputChange}
