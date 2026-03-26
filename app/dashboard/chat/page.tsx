@@ -89,12 +89,11 @@ export default function ChatPage() {
           value={input}
           onChange={handleInputChange}
           placeholder="Ketik curhatanmu di sini..."
-          disabled={isLoading}
           className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 transition-all disabled:opacity-50"
         />
         <button 
           type="submit" 
-          disabled={isLoading || !(input || '').trim()}
+          disabled={!(input || '').trim()}
           className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary"
         >
           <Send size={16} />
