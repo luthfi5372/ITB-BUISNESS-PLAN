@@ -17,12 +17,7 @@ const moods = [
   { emoji: <Smile size={22} />, label: "Baik", color: "text-emerald-400", bg: "bg-emerald-500/20", value: 3 },
 ];
 
-const quests = [
-  { title: "Jurnal Harian", desc: "Tulis 1 hal yang kamu syukuri hari ini", xp: 50, done: false, icon: <BookOpen size={16} /> },
-  { title: "Napas Dalam 5 Menit", desc: "Latihan pernapasan mindful", xp: 30, done: false, icon: <Activity size={16} /> },
-  { title: "Sesi Mira AI", desc: "Curhat ke Mira tentang harimu", xp: 80, done: false, icon: <MessageCircle size={16} /> },
-  { title: "Tidur Sebelum 23.00", desc: "Jaga ritme tidurmu", xp: 60, done: false, icon: <Moon size={16} /> },
-];
+
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -31,6 +26,12 @@ export default function DashboardPage() {
   const [moodHistory, setMoodHistory] = useState<Record<number, number>>({});
   const [leaderboard, setLeaderboard] = useState<{name: string, exp: number}[]>([]);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [questList, setQuestList] = useState([
+    { id: 1, title: "Jurnal Harian", desc: "Tulis 1 hal yang kamu syukuri hari ini", xp: 50, done: false },
+    { id: 2, title: "Napas Dalam 5 Menit", desc: "Latihan pernapasan mindful", xp: 30, done: false },
+    { id: 3, title: "Sesi Mira AI", desc: "Curhat ke Mira tentang harimu", xp: 80, done: false },
+    { id: 4, title: "Tidur Sebelum 23.00", desc: "Jaga ritme tidurmu", xp: 60, done: false },
+  ]);
   const [userData, setUserData] = useState({
     name: "Tamu",
     streak: 0,
@@ -40,8 +41,31 @@ export default function DashboardPage() {
     points: 0,
   });
 
-  const completedQuests = quests.filter(q => q.done).length;
-  const totalXP = quests.filter(q => q.done).reduce((acc, q) => acc + q.xp, 0);
+  const handleQuestClick = async (index: number, xpReward: number) => {
+    if (questList[index].done) return; // Kalau sudah selesai, abaikan
+
+    // 1. Ubah UI jadi centang hijau (Animasi langsung jalan!)
+    const newQuests = [...questList];
+    newQuests[index].done = true;
+    setQuestList(newQuests);
+
+    // 2. Tembak API untuk setor XP ke Database
+    try {
+      const res = await fetch("/api/user/quest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ xpReward }),
+      });
+      if (res.ok) {
+        window.location.reload(); // Refresh data EXP & Leaderboard
+      }
+    } catch (error) {
+      console.error("Gagal menyelesaikan quest", error);
+    }
+  };
+
+  const completedQuests = questList.filter(q => q.done).length;
+  const totalXP = questList.filter(q => q.done).reduce((acc, q) => acc + q.xp, 0);
 
   useEffect(() => {
     // Cek status tutorial untuk UI
@@ -194,7 +218,7 @@ export default function DashboardPage() {
           <div className="flex justify-between items-start mb-5">
             <div>
               <p className="text-[9px] font-black uppercase tracking-widest text-amber-400 mb-1">Quest Harian</p>
-              <h2 className="text-lg font-black italic uppercase tracking-tighter text-white">{completedQuests}/{quests.length} Selesai</h2>
+              <h2 className="text-lg font-black italic uppercase tracking-tighter text-white">{completedQuests}/{questList.length} Selesai</h2>
             </div>
             <div className="bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full flex items-center gap-2">
               <Flame size={12} className="text-amber-400" />
@@ -202,19 +226,29 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="h-2 bg-white/5 rounded-full overflow-hidden mb-1">
-            <motion.div initial={{ width: 0 }} animate={{ width: `${(completedQuests / quests.length) * 100}%` }} transition={{ duration: 1, delay: 0.5 }}
+            <motion.div initial={{ width: 0 }} animate={{ width: `${(completedQuests / questList.length) * 100}%` }} transition={{ duration: 1, delay: 0.5 }}
               className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
             />
           </div>
-          <p className="text-right text-[9px] text-slate-600 font-bold mb-5">{Math.round((completedQuests / quests.length) * 100)}% Selesai</p>
+          <p className="text-right text-[9px] text-slate-600 font-bold mb-5">{Math.round((completedQuests / questList.length) * 100) || 0}% Selesai</p>
 
           <div className="space-y-3">
-            {quests.map((quest, idx) => (
-              <div key={idx} className={`group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer ${quest.done ? "bg-emerald-500/5 border-emerald-500/10 hover:border-emerald-500/30 hover:bg-emerald-500/10" : "bg-white/[0.02] border-white/5 hover:bg-white/10 hover:border-white/20"}`}>
+            {questList.map((quest, idx) => (
+              <div 
+                key={quest.id} 
+                onClick={() => handleQuestClick(idx, quest.xp)}
+                className={`group flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer ${quest.done ? "bg-emerald-500/5 border-emerald-500/10 hover:border-emerald-500/30 hover:bg-emerald-500/10" : "bg-white/[0.02] border-white/5 hover:bg-white/10 hover:border-white/20"}`}
+              >
                 <div className={`${quest.done ? "text-emerald-400 shrink-0" : "text-slate-600 shrink-0 group-hover:text-amber-400"} transition-colors duration-300`}>
                   {quest.done ? <CheckCircle2 size={20} className="animate-[pulse_2s_ease-in-out_infinite]" /> : <Circle size={20} />}
                 </div>
-                <div className={`p-2 rounded-xl shrink-0 transition-colors duration-300 ${quest.done ? "bg-emerald-500/10 text-emerald-400" : "bg-white/5 text-slate-500 group-hover:bg-amber-500/10 group-hover:text-amber-400"}`}>{quest.icon}</div>
+                <div className={`p-2 rounded-xl shrink-0 transition-colors duration-300 ${quest.done ? "bg-emerald-500/10 text-emerald-400" : "bg-white/5 text-slate-500 group-hover:bg-amber-500/10 group-hover:text-amber-400"}`}>
+                  {/* Ikon dinamis berdasarkan ID */}
+                  {quest.id === 1 && <BookOpen size={16} />}
+                  {quest.id === 2 && <Activity size={16} />}
+                  {quest.id === 3 && <MessageCircle size={16} />}
+                  {quest.id === 4 && <Moon size={16} />}
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className={`text-sm font-black transition-colors duration-300 ${quest.done ? "line-through text-slate-500" : "text-white group-hover:text-theme-primary"}`}>{quest.title}</p>
                   <p className="text-[10px] text-slate-600 font-medium">{quest.desc}</p>
