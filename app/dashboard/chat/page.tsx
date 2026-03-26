@@ -5,7 +5,7 @@ import { BrainCircuit, Send, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 export default function ChatPage() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Otomatis scroll ke pesan terbaru
@@ -63,6 +63,13 @@ export default function ChatPage() {
         )}
         <div ref={messagesEndRef} />
       </div>
+
+      {/* --- RADAR ERROR --- */}
+      {error && (
+        <div className="bg-rose-500/10 border border-rose-500/50 text-rose-400 p-3 rounded-2xl mb-4 text-xs font-bold text-center shrink-0">
+          🚨 Oops, koneksi ke Mira terputus: {error.message}
+        </div>
+      )}
 
       {/* Form Ketik Pesan */}
       <form onSubmit={handleSubmit} className="relative shrink-0">
