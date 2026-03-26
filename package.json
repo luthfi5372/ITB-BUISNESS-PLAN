@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.53",
+    "@ai-sdk/react": "^3.0.140",
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "^5.20.0",
     "@radix-ui/react-label": "^2.1.0",

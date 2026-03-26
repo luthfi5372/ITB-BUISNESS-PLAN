@@ -1,6 +1,6 @@
 "use client";
 
-import { useChat } from 'ai/react';
+import { useChat } from '@ai-sdk/react';
 import { BrainCircuit, Send, User } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
@@ -75,7 +75,7 @@ export default function ChatPage() {
         />
         <button 
           type="submit" 
-          disabled={isLoading || !input.trim()}
+          disabled={isLoading || !(input || '').trim()}
           className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary"
         >
           <Send size={16} />
