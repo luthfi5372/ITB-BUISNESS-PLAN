@@ -7,6 +7,8 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+  console.log("🚨 MIRA TERSENGGOL! PESAN MASUK!"); // <--- Alarm Pelacak!
+
   try {
     const { messages } = await req.json();
 
