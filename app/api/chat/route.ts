@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       messages,
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("MIRA_AI_ERROR:", error);
     return new Response(JSON.stringify({ error: "Gagal menyambung ke otak Mira." }), { status: 500 });
