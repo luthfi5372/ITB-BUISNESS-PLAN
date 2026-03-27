@@ -13,6 +13,11 @@ MindMate+ dirancang untuk menjadi ruang aman bagi siapa pun yang membutuhkan tem
 - **Sentiment Analysis**: Setiap pesan Anda dianalisis oleh AI untuk mendeteksi suasana hati (Mood) secara real-time.
 - **Glassmorphism UI**: Tampilan chat modern dengan efek blur kristal dan animasi pulsing yang elegan.
 
+### 🎮 MindMate Adventure (Gamification)
+- **Daily Quests**: Selesaikan misi harian seperti "Morning Grateful" dan "Journaling" yang dideteksi otomatis oleh AI Mira.
+- **Level & XP System**: Kumpulkan XP untuk naik level dari "Mood Explorer" menjadi "Zen Master."
+- **Quest Dashboard**: Panel kontrol interaktif untuk memantau progres petualangan kesehatan mental Anda.
+
 ### 🧘 Health & Wellness Widgets
 - **Breathing Guide (Metode 4-7-8)**: Latihan pernapasan terpandu dengan visualisasi yang menenangkan untuk meredakan kecemasan seketika.
 - **Panic Button (Mode Krisis)**: Akses instan ke nomor darurat nasional (119) dan hotline kesehatan mental Kemenkes.

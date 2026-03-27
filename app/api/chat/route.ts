@@ -86,6 +86,43 @@ export async function POST(req: Request) {
                });
             }
 
+            // --- 🎮 GAMIFICATION: QUEST DETECTION ---
+            const lowerContent = userMessageContent.toLowerCase();
+            let questIdToComplete = "";
+
+            // 1. Gratitude Detection
+            if (lowerContent.includes("bersyukur") || lowerContent.includes("grateful") || lowerContent.includes("terima kasih")) {
+              questIdToComplete = "morning-grateful";
+            } 
+            // 2. Journaling Detection (Jika curhat panjang lebar > 100 char)
+            else if (userMessageContent.length > 100) {
+              questIdToComplete = "journaling-time";
+            }
+
+            if (questIdToComplete) {
+              const today = new Date();
+              today.setHours(0,0,0,0);
+              const exists = await prisma.userQuest.findFirst({
+                where: { userId, questId: questIdToComplete, createdAt: { gte: today } }
+              });
+
+              if (!exists || !exists.completed) {
+                const q = await prisma.quest.findUnique({ where: { id: questIdToComplete } });
+                if (q) {
+                  await prisma.userQuest.upsert({
+                    where: { userId_questId_createdAt: { userId, questId: questIdToComplete, createdAt: exists?.createdAt || new Date() } },
+                    update: { completed: true, completedAt: new Date() },
+                    create: { userId, questId: questIdToComplete, completed: true, completedAt: new Date() }
+                  });
+                  await prisma.user.update({
+                    where: { id: userId },
+                    data: { exp: { increment: q.xpReward } }
+                  });
+                  console.log(`🎮 QUEST_AUTO_COMPLETED: ${questIdToComplete} (+${q.xpReward} XP)`);
+                }
+              }
+            }
+
             console.log("💾 MIRA_SAVED_CHAT_TO_DB:", chatSession.id);
           } catch (dbError) {
             console.error("❌ MIRA_DB_SAVE_ERROR:", dbError);

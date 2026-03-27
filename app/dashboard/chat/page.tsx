@@ -1,8 +1,10 @@
 "use client";
 
 import { useChat } from '@ai-sdk/react';
-import { BrainCircuit, Send, User, Wind, ShieldAlert, Phone, X } from 'lucide-react';
+import { BrainCircuit, Send, User, Wind, ShieldAlert, Phone, X, Award } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import QuestDashboard from '@/components/QuestDashboard';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ChatPage() {
   const { messages, sendMessage, status, setMessages } = useChat({
@@ -44,9 +46,10 @@ export default function ChatPage() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Fitur Ekspansi: Panic & Breathing
+  // Fitur Ekspansi: Panic & Breathing & Quests
   const [showPanicModal, setShowPanicModal] = useState(false);
   const [isBreathing, setIsBreathing] = useState(false);
+  const [isQuestOpen, setIsQuestOpen] = useState(false);
   const [breathingStep, setBreathingStep] = useState<"Tarik" | "Tahan" | "Hembus">("Tarik");
 
   // Logika 4-7-8 Breathing (Sederhana)
@@ -108,6 +111,13 @@ export default function ChatPage() {
         {/* Tombol Aksi Langsung (Ekspansi) */}
         <div className="flex items-center gap-2 ml-auto">
           <button 
+            onClick={() => setIsQuestOpen(!isQuestOpen)}
+            className={`p-2.5 rounded-xl transition-all border ${isQuestOpen ? 'bg-amber-500 text-white border-amber-500/50' : 'bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500/20'}`}
+            title="MindMate Adventure"
+          >
+            <Award size={20} />
+          </button>
+          <button 
             onClick={() => setIsBreathing(true)}
             className="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl hover:bg-emerald-500 hover:text-white transition-all border border-emerald-500/20"
             title="Latihan Pernapasan"
@@ -124,80 +134,98 @@ export default function ChatPage() {
         </div>
       </div>
 
-       {/* 💬 AREA CHAT */}
-      <div className="flex-1 overflow-y-auto space-y-6 p-4 bg-white/[0.02] border border-white/5 rounded-3xl mb-4 shadow-inner scrollbar-none">
-        {isHistoryLoading && (
-          <div className="h-full flex items-center justify-center">
-            <div className="w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
+      <div className="flex flex-1 gap-6 overflow-hidden">
+        {/* 💬 AREA CHAT (Kiri) */}
+        <div className="flex-1 flex flex-col min-w-0 transition-all duration-500">
+          <div className="flex-1 overflow-y-auto space-y-6 p-4 bg-white/[0.02] border border-white/5 rounded-3xl mb-4 shadow-inner scrollbar-none">
+            {isHistoryLoading && (
+              <div className="h-full flex items-center justify-center">
+                <div className="w-6 h-6 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
 
-        {!isHistoryLoading && messages.length === 0 && (
-          <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-3">
-            <BrainCircuit size={48} className="mb-2 text-theme-primary animate-pulse" />
-            <p className="text-sm font-bold text-white">Halo! Aku Mira. 👋</p>
-            <p className="text-xs text-slate-300 max-w-xs">Tuliskan apa yang kamu rasakan hari ini. Aku di sini untuk mendukungmu tanpa penghakiman.</p>
-          </div>
-        )}
+            {!isHistoryLoading && messages.length === 0 && (
+              <div className="h-full flex flex-col items-center justify-center text-center opacity-50 space-y-3">
+                <BrainCircuit size={48} className="mb-2 text-theme-primary animate-pulse" />
+                <p className="text-sm font-bold text-white">Halo! Aku Mira. 👋</p>
+                <p className="text-xs text-slate-300 max-w-xs">Tuliskan apa yang kamu rasakan hari ini. Aku di sini untuk mendukungmu tanpa penghakiman.</p>
+              </div>
+            )}
 
-        {/* --- DAFTAR PESAN --- */}
-        {messages.map(m => (
-          <div key={m.id} className={`flex gap-4 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
-            {/* Avatar */}
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg ${
-                m.role === 'user' 
-                ? 'bg-gradient-to-tr from-indigo-500 to-blue-500' 
-                : 'bg-theme-primary/80 border border-emerald-400/30'
-              }`}>
-              {m.role === 'user' ? <User size={16} className="text-white" /> : <BrainCircuit size={16} className="text-white" />}
-            </div>
+            {/* --- DAFTAR PESAN --- */}
+            {messages.map(m => (
+              <div key={m.id} className={`flex gap-4 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                {/* Avatar */}
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg ${
+                    m.role === 'user' 
+                    ? 'bg-gradient-to-tr from-indigo-500 to-blue-500' 
+                    : 'bg-theme-primary/80 border border-emerald-400/30'
+                  }`}>
+                  {m.role === 'user' ? <User size={16} className="text-white" /> : <BrainCircuit size={16} className="text-white" />}
+                </div>
+                
+                {/* 🎨 Balon Chat Warni & Gaya Baru */}
+                <div className={`p-4 rounded-2xl max-w-[80%] text-sm leading-relaxed shadow-sm transition-all duration-300 ${
+                    m.role === 'user' 
+                    ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-tr-sm' 
+                    : 'bg-white/10 backdrop-blur-md border border-white/20 text-emerald-50 rounded-tl-sm'
+                  }`}>
+                  {m.parts.map((p, i) => (p.type === 'text' ? <span key={i}>{p.text}</span> : null))}
+                </div>
+              </div>
+            ))}
+
+            {/* --- ⏳ ANIMASI MIRA SEDANG MENGETIK (LOADING) --- */}
+            {isLoading && (
+              <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-theme-primary/80 border border-emerald-400/30 shadow-lg">
+                  <BrainCircuit size={16} className="text-white" />
+                </div>
+                {/* Titik memantul emerald */}
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-1.5 rounded-tl-sm backdrop-blur-sm">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            )}
             
-            {/* 🎨 Balon Chat Warni & Gaya Baru */}
-            <div className={`p-4 rounded-2xl max-w-[80%] text-sm leading-relaxed shadow-sm transition-all duration-300 ${
-                m.role === 'user' 
-                ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-tr-sm' 
-                : 'bg-white/10 backdrop-blur-md border border-white/20 text-emerald-50 rounded-tl-sm'
-              }`}>
-              {m.parts.map((p, i) => (p.type === 'text' ? <span key={i}>{p.text}</span> : null))}
-            </div>
+            <div ref={messagesEndRef} />
           </div>
-        ))}
 
-        {/* --- ⏳ ANIMASI MIRA SEDANG MENGETIK (LOADING) --- */}
-        {isLoading && (
-          <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-theme-primary/80 border border-emerald-400/30 shadow-lg">
-              <BrainCircuit size={16} className="text-white" />
-            </div>
-            {/* Titik memantul emerald */}
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-1.5 rounded-tl-sm backdrop-blur-sm">
-              <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 rounded-full bg-emerald-400/80 animate-bounce" style={{ animationDelay: '300ms' }} />
-            </div>
-          </div>
-        )}
-        
-        <div ref={messagesEndRef} />
+          {/* 🚀 FORM INPUT */}
+          <form onSubmit={handleSubmit} className="flex gap-2 shrink-0 relative">
+            <input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ketik pesannya di sini..."
+              disabled={isLoading}
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 transition-all disabled:opacity-50 shadow-lg placeholder:text-slate-500"
+            />
+            <button 
+              type="submit" 
+              disabled={isLoading || !(input || '').trim()}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary ring-1 ring-emerald-400/30 shadow-md"
+            >
+              <Send size={18} />
+            </button>
+          </form>
+        </div>
+
+        {/* 🎖️ QUEST DASHBOARD (Kanan - Sidebar) */}
+        <AnimatePresence>
+          {isQuestOpen && (
+            <motion.div 
+              initial={{ width: 0, opacity: 0, scale: 0.9 }}
+              animate={{ width: 340, opacity: 1, scale: 1 }}
+              exit={{ width: 0, opacity: 0, scale: 0.8 }}
+              className="hidden lg:block shrink-0 overflow-y-auto scrollbar-none"
+            >
+              <QuestDashboard />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-
-      {/* 🚀 FORM INPUT (BYPASS AUTO) */}
-      <form onSubmit={handleSubmit} className="flex gap-2 shrink-0 relative">
-        <input
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Ketik pesannya di sini..."
-          disabled={isLoading}
-          className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 transition-all disabled:opacity-50 shadow-lg placeholder:text-slate-500"
-        />
-        <button 
-          type="submit" 
-          disabled={isLoading || !(input || '').trim()}
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary ring-1 ring-emerald-400/30 shadow-md"
-        >
-          <Send size={18} />
-        </button>
-      </form>
 
       {/* 🏥 MODAL PANIC (DARURAT) */}
       {showPanicModal && (
@@ -251,7 +279,14 @@ export default function ChatPage() {
             </div>
 
             <button 
-              onClick={() => setIsBreathing(false)} 
+              onClick={async () => {
+                setIsBreathing(false);
+                // Trigger Quest Completion
+                await fetch('/api/quests', {
+                  method: 'POST',
+                  body: JSON.stringify({ questId: 'mindful-breathing' })
+                });
+              }} 
               className="px-8 py-3 bg-white/5 border border-white/10 text-white rounded-full text-sm font-bold hover:bg-white/10 hover:border-emerald-400/30 transition-all"
             >
               Selesai & Tenang
