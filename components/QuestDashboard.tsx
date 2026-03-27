@@ -9,13 +9,13 @@ interface Quest {
   title: string;
   description: string;
   xpReward: number;
-  completed: boolean;
+  isCompleted: boolean;
   category: string;
 }
 
 interface UserStats {
   level: number;
-  exp: number;
+  xp: number;
   title: string;
 }
 
@@ -52,7 +52,7 @@ export default function QuestDashboard() {
   );
 
   const currentLevelXp = (user?.level || 1) * 100;
-  const progressPercent = Math.min(((user?.exp || 0) / currentLevelXp) * 100, 100);
+  const progressPercent = Math.min(((user?.xp || 0) / currentLevelXp) * 100, 100);
 
   return (
     <div className="space-y-6">
@@ -73,7 +73,7 @@ export default function QuestDashboard() {
             <div className="mt-3">
               <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5 px-1">
                 <span>XP Progress</span>
-                <span>{user?.exp || 0} / {currentLevelXp} XP</span>
+                <span>{user?.xp || 0} / {currentLevelXp} XP</span>
               </div>
               <div className="h-2.5 bg-white/5 rounded-full overflow-hidden border border-white/5 shadow-inner">
                 <motion.div 
@@ -108,35 +108,35 @@ export default function QuestDashboard() {
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.02 }}
                 className={`group p-4 rounded-2xl border transition-all duration-300 relative overflow-hidden ${
-                  q.completed 
+                  q.isCompleted 
                   ? 'bg-emerald-500/10 border-emerald-500/30 opacity-80' 
                   : 'bg-white/5 border-white/10 hover:border-white/30 cursor-default'
                 }`}
               >
-                {q.completed && (
+                {q.isCompleted && (
                   <div className="absolute top-0 right-0 p-2 text-emerald-400">
                     <CheckCircle2 size={16} />
                   </div>
                 )}
                 
                 <div className="flex items-start gap-3">
-                  <div className={`mt-0.5 ${q.completed ? 'text-emerald-400' : 'text-slate-500'}`}>
-                    {q.completed ? <CheckCircle2 size={20} /> : <Circle size={20} />}
+                  <div className={`mt-0.5 ${q.isCompleted ? 'text-emerald-400' : 'text-slate-500'}`}>
+                    {q.isCompleted ? <CheckCircle2 size={20} /> : <Circle size={20} />}
                   </div>
                   <div>
-                    <h4 className={`text-sm font-bold ${q.completed ? 'text-emerald-100 line-through opacity-50' : 'text-white'}`}>
+                    <h4 className={`text-sm font-bold ${q.isCompleted ? 'text-emerald-100 line-through opacity-50' : 'text-white'}`}>
                       {q.title}
                     </h4>
-                    <p className={`text-[11px] leading-tight ${q.completed ? 'text-emerald-400/50' : 'text-slate-400'}`}>
+                    <p className={`text-[11px] leading-tight ${q.isCompleted ? 'text-emerald-400/50' : 'text-slate-400'}`}>
                       {q.description}
                     </p>
                     <div className="mt-2.5 flex items-center gap-2">
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
-                        q.completed ? 'bg-emerald-500/20 text-emerald-300' : 'bg-yellow-500/10 text-yellow-400'
+                        q.isCompleted ? 'bg-emerald-500/20 text-emerald-300' : 'bg-yellow-500/10 text-yellow-400'
                       }`}>
                         +{q.xpReward} XP
                       </span>
-                      {q.completed && (
+                      {q.isCompleted && (
                         <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
                           <Sparkles size={10} /> Diselesaikan
                         </span>

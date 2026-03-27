@@ -25,7 +25,7 @@ model User {
 
   streak            Int      @default(0)
   stabilityScore    Int      @default(80)
-  exp               Int      @default(0) // Poin pengalaman
+  xp                Int      @default(0) // Mengikuti Blueprint User
   level             Int      @default(1) // Level user
   title             String   @default("Newbie") // Gelar otomatis
   hasSeenTutorial   Boolean  @default(false) // Status Tutorial Barurd
@@ -42,7 +42,7 @@ model User {
   habits        Habit[]
   subscriptions Subscription[]
   chatSessions  ChatSession[]
-  userQuests    UserQuest[]
+  quests        UserQuest[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -186,26 +186,27 @@ model ChatMessage {
 }
 
 model Quest {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  xpReward    Int
-  type        String   // "DAILY", "STREAK", "SPECIAL"
-  category    String?  // "gratitude", "breathing", "journaling"
-  createdAt   DateTime @default(now())
-  userQuests  UserQuest[]
+  id            String      @id @default(cuid())
+  title         String      // Contoh: "The Morning Grateful"
+  description   String      // Contoh: "Sebutkan 3 hal yang kamu syukuri hari ini"
+  xpReward      Int         // Contoh: 15
+  icon          String?     // Mengikuti Blueprint: "sun", "wind", etc
+  type          String      @default("DAILY")
+  category      String?
+  
+  userQuests    UserQuest[]
 }
 
 model UserQuest {
-  id          String   @id @default(cuid())
-  userId      String
-  questId     String
-  completed   Boolean  @default(false)
-  completedAt DateTime?
-  createdAt   DateTime @default(now()) // Digunakan untuk reset harian (filter by date)
+  id            String      @id @default(cuid())
+  userId        String
+  questId       String
+  isCompleted   Boolean     @default(false)
+  completedAt   DateTime?
+  createdAt     DateTime    @default(now())
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  quest     Quest    @relation(fields: [questId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quest         Quest       @relation(fields: [questId], references: [id], onDelete: Cascade)
   @@unique([userId, questId, createdAt])
 }
 

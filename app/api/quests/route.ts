@@ -16,7 +16,7 @@ export async function GET() {
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { level: true, exp: true, title: true }
+      select: { level: true, xp: true, title: true }
     });
 
     // Ambil semua quest
@@ -35,7 +35,7 @@ export async function GET() {
       }
     });
 
-    const completionMap = new Map(userQuests.map(uq => [uq.questId, uq.completed]));
+    const completionMap = new Map(userQuests.map(uq => [uq.questId, uq.isCompleted]));
 
     const questsWithStatus = allQuests.map(q => ({
       ...q,
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       }
     });
 
-    if (existing?.completed) {
+    if (existing?.isCompleted) {
       return NextResponse.json({ message: "Already completed today" });
     }
 
@@ -92,22 +92,22 @@ export async function POST(req: Request) {
           createdAt: existing?.createdAt || new Date()
         }
       },
-      update: { completed: true, completedAt: new Date() },
-      create: { userId, questId, completed: true, completedAt: new Date() }
+      update: { isCompleted: true, completedAt: new Date() },
+      create: { userId, questId, isCompleted: true, completedAt: new Date() }
     });
 
     // Tambah XP ke User
     const user = await prisma.user.update({
       where: { id: userId },
       data: {
-        exp: { increment: quest.xpReward }
+        xp: { increment: quest.xpReward }
       }
     });
 
     // Cek Level Up
     const nextLevelXp = user.level * 100;
     let leveledUp = false;
-    if (user.exp >= nextLevelXp) {
+    if (user.xp >= nextLevelXp) {
       await prisma.user.update({
         where: { id: userId },
         data: {

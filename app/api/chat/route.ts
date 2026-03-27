@@ -106,17 +106,17 @@ export async function POST(req: Request) {
                 where: { userId, questId: questIdToComplete, createdAt: { gte: today } }
               });
 
-              if (!exists || !exists.completed) {
+              if (!exists || !exists.isCompleted) {
                 const q = await prisma.quest.findUnique({ where: { id: questIdToComplete } });
                 if (q) {
                   await prisma.userQuest.upsert({
                     where: { userId_questId_createdAt: { userId, questId: questIdToComplete, createdAt: exists?.createdAt || new Date() } },
-                    update: { completed: true, completedAt: new Date() },
-                    create: { userId, questId: questIdToComplete, completed: true, completedAt: new Date() }
+                    update: { isCompleted: true, completedAt: new Date() },
+                    create: { userId, questId: questIdToComplete, isCompleted: true, completedAt: new Date() }
                   });
                   await prisma.user.update({
                     where: { id: userId },
-                    data: { exp: { increment: q.xpReward } }
+                    data: { xp: { increment: q.xpReward } }
                   });
                   console.log(`🎮 QUEST_AUTO_COMPLETED: ${questIdToComplete} (+${q.xpReward} XP)`);
                 }
