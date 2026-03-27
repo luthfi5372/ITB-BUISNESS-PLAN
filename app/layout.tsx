@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className={`${plusJakarta.variable} font-jakarta bg-[#050508] cyber-cursor antialiased`}>
+      <body suppressHydrationWarning className={`${plusJakarta.variable} font-jakarta bg-[#050508] cyber-cursor antialiased`}>
         <AuthProvider>
           <LevelUpProvider>
             <ThemeProvider attribute="data-theme" defaultTheme="sage-green" enableSystem={false}>

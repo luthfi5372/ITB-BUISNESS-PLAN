@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMates - Menyiapkan Ruang Aman</title>
+    <style>
+        :root {
+            --bg-color: #0f0f1a;
+            --lavender: #c4b5fd;
+            --mint: #6ee7b7;
+            --soft-white: #f8fafc;
+            --glow-color: rgba(196, 181, 253, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--soft-white);
+        }
+
+        /* Background Bubbles */
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 10s infinite ease-in;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.2; }
+            80% { opacity: 0.2; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container Utama */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        /* Logo Animasi */
+        .logo-wrapper {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            fill: var(--lavender);
+            filter: drop-shadow(0 0 15px var(--glow-color));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--glow-color)); opacity: 0.8; }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--lavender)); opacity: 1; }
+        }
+
+        /* Tagline Typewriter */
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 2.5rem;
+            height: 1.5rem;
+            color: var(--lavender);
+            opacity: 0.9;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: var(--mint);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--lavender), var(--mint));
+            border-radius: 10px;
+            transition: width 0.3s ease-out;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        /* Loading Messages */
+        .message {
+            font-size: 0.85rem;
+            color: var(--mint);
+            opacity: 0.8;
+            height: 1.2rem;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Welcome Screen */
+        #welcome-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .welcome-text {
+            font-size: 2rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, var(--lavender), var(--mint));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: welcomePop 1s ease-out;
+        }
+
+        @keyframes welcomePop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transition: opacity 1s ease !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles" id="bubble-container"></div>
+
+    <div class="container" id="loading-ui">
+        <div class="logo-wrapper">
+            <!-- Ikon Otak/Heart SVG -->
+            <svg class="logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </div>
+
+        <div class="tagline" id="typewriter"></div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+
+        <div class="message" id="loading-msg">Matahari terbit di ufuk jiwa...</div>
+    </div>
+
+    <div id="welcome-screen">
+        <h2 class="welcome-text">Selamat Datang 💜</h2>
+    </div>
+
+    <script>
+        // 1. Inisialisasi Bubbles
+        const bubbleContainer = document.getElementById('bubble-container');
+        for (let i = 0; i < 20; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 40 + 10 + 'px';
+            bubble.style.width = size;
+            bubble.style.height = size;
+            bubble.style.left = Math.random() * 100 + '%';
+            bubble.style.animationDelay = Math.random() * 5 + 's';
+            bubble.style.animationDuration = Math.random() * 5 + 7 + 's';
+            bubbleContainer.appendChild(bubble);
+        }
+
+        // 2. Typewriter Effect
+        const taglineText = "You're not alone";
+        const typewriterElement = document.getElementById('typewriter');
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < taglineText.length) {
+                typewriterElement.textContent += taglineText.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 150);
+            } else {
+                typewriterElement.innerHTML += '<span class="cursor"></span>';
+            }
+        }
+
+        // 3. Loading Messages
+        const messages = [
+            "Menyiapkan ruang aman untukmu...",
+            "Menghubungkan ke teman setiamu...",
+            "MindMates siap menemanimu...",
+            "Lilin ketenangan sedang dinyalakan...",
+            "Menyelaraskan frekuensi kedamaian..."
+        ];
+        const msgElement = document.getElementById('loading-msg');
+        let msgIndex = 0;
+
+        function rotateMessages() {
+            msgElement.style.opacity = 0;
+            setTimeout(() => {
+                msgIndex = (msgIndex + 1) % messages.length;
+                msgElement.textContent = messages[msgIndex];
+                msgElement.style.opacity = 0.8;
+            }, 500);
+        }
+        setInterval(rotateMessages, 2500);
+
+        // 4. Progress Bar Logic
+        const progressBar = document.getElementById('progress');
+        const loadingUI = document.getElementById('loading-ui');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        let progress = 0;
+
+        function updateProgress() {
+            if (progress < 100) {
+                progress += Math.random() * 1.5;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = progress + '%';
+                
+                // Kecepatan loading bervariasi agar terasa alami
+                const nextStep = Math.random() * 150 + 50;
+                setTimeout(updateProgress, nextStep);
+            } else {
+                finishLoading();
+            }
+        }
+
+        function finishLoading() {
+            setTimeout(() => {
+                loadingUI.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingUI.style.display = 'none';
+                    welcomeScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        welcomeScreen.style.opacity = 1;
+                    }, 50);
+                }, 1000);
+            }, 800);
+        }
+
+        // Start everything
+        window.onload = () => {
+            setTimeout(type, 800);
+            setTimeout(updateProgress, 500);
+        };
+    </script>
+</body>
+</html>

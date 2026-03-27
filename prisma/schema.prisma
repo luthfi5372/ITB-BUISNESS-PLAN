@@ -41,6 +41,7 @@ model User {
   achievements  Achievement[]
   habits        Habit[]
   subscriptions Subscription[]
+  chatSessions  ChatSession[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -159,5 +160,27 @@ model Subscription {
   createdAt    DateTime @default(now())
 
   user         User     @relation(fields: [userId], references: [id])
+}
+
+model ChatSession {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String?  // e.g., "Curhat tentang pekerjaan"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  messages  ChatMessage[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id            String   @id @default(cuid())
+  sessionId     String
+  role          String   // "user" or "assistant"
+  content       String   @db.Text
+  moodDetected  String?  // Untuk fitur mood tracker otomatis
+  createdAt     DateTime @default(now())
+  
+  session       ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }
 
