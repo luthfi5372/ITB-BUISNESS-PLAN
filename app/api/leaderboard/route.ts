@@ -9,12 +9,12 @@ export async function GET() {
     // Perintahkan Prisma untuk mencari 3 User dengan EXP paling tinggi (descending)
     const topUsers = await prisma.user.findMany({
       orderBy: {
-        exp: 'desc',
+        xp: 'desc',
       },
       take: 3, // Hanya ambil Top 3
       select: {
         name: true,
-        exp: true,
+        xp: true,
       },
     });
 
