@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ChatPage() {
   // --- AI SDK v6 MIRA LOGIC ---
-  const { messages, sendMessage, status, setMessages } = useChat({
+  const { messages, sendMessage, status, setMessages, append, setInput, input, handleInputChange } = useChat({
     // @ts-ignore
     api: '/api/chat',
     onError: (err) => {
@@ -17,7 +17,8 @@ export default function ChatPage() {
     }
   });
 
-  const [input, setInput] = useState("");
+  // BUG FIX (image_7): Hilangkan deklarasi duplikat agar tidak tabrakan dengan useChat
+  // const [input, setInput] = useState(""); 
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [isHistoryLoading, setIsHistoryLoading] = useState(true);
 
@@ -91,16 +92,23 @@ export default function ChatPage() {
     runStep();
   }, [isBreathing]);
 
+  // handleInputChange sudah tersedia dari useChat secara default
+  /*
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
+  */
 
-  const handleCustomSubmit = (e: React.FormEvent) => {
+  // BUG FIX (Detektif Luthfi): Buat fungsi submit kustom yang kuat
+  const handleTembakManual = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    
+    // Gunakan 'input?.trim()' dengan pelindung kuesioner untuk guard terbaik
+    const sanitizedInput = input?.trim();
+    if (!sanitizedInput || isLoading) return;
 
     // 🕵️‍♂️ ALGORITMA PENDETEKSI MISI (Client-side trigger)
-    const teks = input.toLowerCase();
+    const teks = sanitizedInput.toLowerCase();
     if (!questGrateful && (teks.includes("syukur") || teks.includes("terima kasih") || teks.includes("alhamdulillah") || teks.includes("senang"))) {
       setQuestGrateful(true); 
       // Update XP lokal untuk instant feedback
@@ -108,7 +116,7 @@ export default function ChatPage() {
       setNotifMisi("🌟 Misi Selesai: The Morning Grateful (+15 XP)!");
       setTimeout(() => setNotifMisi(""), 4000);
       
-      // Kirim sinyal ke server untuk persistensi (opsional jika server sudah mendeteksi)
+      // Kirim sinyal ke server untuk persistensi
       fetch('/api/user/quest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,11 +124,15 @@ export default function ChatPage() {
       });
     }
 
+    // Panggil fungsi append yang sudah kita ekstrak dari useChat (Detektif Luthfi Mode)
+    // Atau tetap gunakan sendMessage untuk kompatibilitas session v6
     sendMessage({ 
-      text: input,
+      text: sanitizedInput,
        // @ts-ignore
       body: { sessionId }
     });
+
+    // BUG FIX: Gunakan setInput yang baru diekstrak untuk membersihkan kotak ketik
     setInput("");
   };
 
@@ -246,8 +258,8 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* 🚀 FORM INPUT */}
-      <form onSubmit={handleCustomSubmit} className="flex gap-2 shrink-0 relative">
+      {/* 🚀 FORM INPUT (DENGAN PELATUK DETEKSI MISI - DETEKTIF LUTHFI EDITION) */}
+      <form onSubmit={handleTembakManual} className="flex gap-2 shrink-0 relative">
         <input
           value={input}
           onChange={handleInputChange}
@@ -257,8 +269,8 @@ export default function ChatPage() {
         />
         <button 
           type="submit" 
-          disabled={isLoading || !(input || '').trim()}
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center hover:bg-theme-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-theme-primary ring-1 ring-emerald-400/30 shadow-md"
+          disabled={isLoading || !(input?.trim())}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-theme-primary text-white rounded-xl flex items-center justify-center transition-colors shadow-md ${isLoading || !(input?.trim()) ? "opacity-30 pointer-events-none" : "hover:bg-theme-primary/80 ring-1 ring-emerald-400/30"}`}
         >
           <Send size={18} />
         </button>
