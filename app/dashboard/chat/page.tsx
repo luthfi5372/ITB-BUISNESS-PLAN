@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from '@ai-sdk/react';
-import { BrainCircuit, Send, User, Wind, ShieldAlert, Phone, X, Trophy, Flame } from 'lucide-react';
+import { BrainCircuit, Send, User, Wind, ShieldAlert, Phone, X, Trophy, Flame, Star } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import QuestDashboard from '@/components/QuestDashboard';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -50,6 +50,10 @@ export default function ChatPage() {
   const [userStats, setUserStats] = useState<{ level: number, xp: number, title: string } | null>(null);
   const [breathingStep, setBreathingStep] = useState<"Tarik" | "Tahan" | "Hembus">("Tarik");
 
+  // --- STATE DETEKSI MISI LOKAL ---
+  const [questGrateful, setQuestGrateful] = useState(false);
+  const [notifMisi, setNotifMisi] = useState("");
+
   // Fetch User Stats (XP/Level) periodically or on mount
   useEffect(() => {
     const fetchStats = async () => {
@@ -94,6 +98,24 @@ export default function ChatPage() {
   const handleCustomSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
+
+    // 🕵️‍♂️ ALGORITMA PENDETEKSI MISI (Client-side trigger)
+    const teks = input.toLowerCase();
+    if (!questGrateful && (teks.includes("syukur") || teks.includes("terima kasih") || teks.includes("alhamdulillah") || teks.includes("senang"))) {
+      setQuestGrateful(true); 
+      // Update XP lokal untuk instant feedback
+      setUserStats(prev => prev ? { ...prev, xp: prev.xp + 15 } : null);
+      setNotifMisi("🌟 Misi Selesai: The Morning Grateful (+15 XP)!");
+      setTimeout(() => setNotifMisi(""), 4000);
+      
+      // Kirim sinyal ke server untuk persistensi (opsional jika server sudah mendeteksi)
+      fetch('/api/user/quest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ xpReward: 15 })
+      });
+    }
+
     sendMessage({ 
       text: input,
        // @ts-ignore
@@ -114,7 +136,22 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-[calc(100vh-80px)] max-w-4xl mx-auto p-4 lg:p-6 transition-all duration-300 relative">
       
-      {/* 🔮 HEADER + XP BAR (Ultimate Edition Style) */}
+      {/* 🌟 NOTIFIKASI MISI SELESAI (Ultimate Edition Notification) */}
+      <AnimatePresence>
+        {notifMisi && (
+          <motion.div 
+            initial={{ y: -50, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            exit={{ y: -50, opacity: 0, x: '-50%' }}
+            className="fixed top-32 left-1/2 z-[100]"
+          >
+            <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 text-white px-6 py-3 rounded-2xl shadow-[0_10px_40px_rgba(52,211,153,0.4)] border border-white/20 flex items-center gap-3 font-bold whitespace-nowrap">
+              <Star size={20} className="fill-white animate-pulse" />
+              {notifMisi}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-4 flex items-center justify-between shrink-0 backdrop-blur-xl shadow-lg relative overflow-hidden">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-theme-primary/20 rounded-xl flex items-center justify-center relative ring-2 ring-emerald-400/20 shadow-[0_0_15px_rgba(52,211,153,0.2)]">

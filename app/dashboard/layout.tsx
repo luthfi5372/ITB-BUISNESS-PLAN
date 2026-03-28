@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // 1. Siapkan state untuk menampung data asli dari database
   const [userStats, setUserStats] = useState({
     level: 1,
-    exp: 0,
+    xp: 0,
     title: "Newbie",
   });
 
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           if (!data.error) {
             setUserStats({
               level: data.level || 1,
-              exp: data.exp || 0,
+              xp: data.xp || 0,
               title: data.title || "Newbie",
             });
           }
@@ -51,9 +51,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }, [session]);
 
-  // Hitung persentase EXP dinamis (Misal: per level butuh 1000 * level EXP)
-  const nextLevelXp = userStats.level * 1000;
-  const xpPercentage = Math.min((userStats.exp / nextLevelXp) * 100, 100);
+  // Hitung persentase XP dinamis (100 * Level)
+  const nextLevelXp = userStats.level * 100;
+  const xpPercentage = Math.min((userStats.xp / nextLevelXp) * 100, 100);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white flex overflow-hidden">
@@ -99,7 +99,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex justify-between text-[9px] font-bold text-slate-500 uppercase mb-1">
               <span>XP Progress</span>
               <span className="group-hover:text-slate-300 transition-colors">
-                {userStats.exp.toLocaleString("id-ID")} / {nextLevelXp.toLocaleString("id-ID")}
+                {userStats.xp.toLocaleString("id-ID")} / {nextLevelXp.toLocaleString("id-ID")}
               </span>
             </div>
             <div className="h-1.5 bg-white/5 rounded-full overflow-hidden relative">
